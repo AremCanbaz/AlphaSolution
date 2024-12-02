@@ -1,51 +1,38 @@
 package com.example.alphasolution.Repository;
 
-import org.springframework.core.io.ClassPathResource;
-
-import java.io.IOException;
-import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.Properties;
+
 
 public class DbManager {
     static Connection connection = null;
 
     public static Connection getConnection() {
-
-
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            System.out.println(e.getMessage());
-            e.printStackTrace();
-        }
-        String url = "";
-        String user = "";
-        String password ="";
-
-        if (connection != null)
-            return connection;
-
-        try (InputStream input = new ClassPathResource("application.properties").getInputStream()) {
-            Properties properties = new Properties();
-            properties.load(input);
-            url = properties.getProperty("url");
-            user = properties.getProperty("user");
-            password = properties.getProperty("password");
-
-        } catch (IOException error) {
-            error.printStackTrace();
+        if (connection != null) {
+            try {
+                if (!connection.isClosed()) {
+                    return connection;
+                }
+            } catch (SQLException e) {
+                System.out.println("Error validating connection: " + e.getMessage());
+            }
         }
 
+        String url = System.getenv("PROD_URL"); // Miljøvariabel
+        String user = System.getenv("PROD_USERNAME");
+        String password = System.getenv("PROD_PASSWORD");
+
         try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection(url, user, password);
-
-        } catch (SQLException e){
-            System.out.println(e.getMessage());
-            e.printStackTrace();
+            System.out.println("Database connection established.");
+        } catch (ClassNotFoundException e) {
+            System.out.println("MySQL JDBC Driver not found: " + e.getMessage());
+        } catch (SQLException e) {
+            System.out.println("Error establishing database connection: " + e.getMessage());
         }
         return connection;
     }
 }
+
