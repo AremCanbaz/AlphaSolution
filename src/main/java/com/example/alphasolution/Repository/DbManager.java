@@ -21,9 +21,9 @@ public class DbManager {
             System.out.println(e.getMessage());
             e.printStackTrace();
         }
-        String url = "jdbc:mysql://localhost:3306/alphasolution";
-        String user = "root";
-        String password = "";
+        String url = "";
+        String user = "";
+        String password ="";
 
         if (connection != null)
             return connection;
