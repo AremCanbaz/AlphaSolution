@@ -21,5 +21,9 @@ public class UserService {
         return userRepository.findUserByUsernameAndPassword(username, password);
     }
 
+    public String findUsernamebyUserid(int userid){
+        return userRepository.findUsernameByUserId(userid);
+    }
+
 
 }

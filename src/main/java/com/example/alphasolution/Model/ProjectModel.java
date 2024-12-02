@@ -1,13 +1,14 @@
 package com.example.alphasolution.Model;
 
 public class ProjectModel {
+    private int projectId;
     private String projectName;
     private String description;
     private int totalHours;
 
     public ProjectModel() {}
 
-    public ProjectModel(String projectName, String description, int totalHours) {
+    public ProjectModel(int projectId, String projectName, String description, int totalHours) {
         this.projectName = projectName;
         this.description = description;
         this.totalHours = totalHours;
@@ -35,5 +36,12 @@ public class ProjectModel {
 
     public void setTotalHours(int totalHours) {
         this.totalHours = totalHours;
+    }
+
+    public int getProjectId() {
+        return projectId;
+    }
+    public void setProjectId(int projectId) {
+        this.projectId = projectId;
     }
 }

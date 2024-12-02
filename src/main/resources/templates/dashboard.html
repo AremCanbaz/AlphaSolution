@@ -2,33 +2,46 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Dashboard</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link th:href="@{/dashboard.css}" rel="stylesheet">
 </head>
 <body>
-<div class="container mt-5">
+<div class="container">
     <h1>Welcome to Your Dashboard</h1>
     <p>User ID: <span th:text="${userId}"></span></p>
+    <p>Username: <span th:text="${username}"></span></p>
+
+    <!-- Opret Projekt Knappen -->
+    <div class="create-project">
+        <button onclick="window.location.href='/createProject'" class="btn-create">Opret Projekt</button>
+    </div>
+
     <h2>Your Projects</h2>
-    <table class="table table-striped">
+    <table>
         <thead>
         <tr>
             <th>Project Name</th>
             <th>Description</th>
             <th>Total Hours</th>
+            <th>Actions</th>
         </tr>
         </thead>
         <tbody>
         <!-- Loop through the projects -->
         <tr th:each="project : ${projects}">
-            <td th:text="${project.projectName}">Project Name</td>
+            <!-- Klikbart Projektnavn -->
+            <td>
+                <a th:href="@{'/projects/' + ${project.projectId}}" class="project-link" th:text="${project.projectName}">Project Name</a>
+            </td>
             <td th:text="${project.description}">Description</td>
             <td th:text="${project.totalHours}">Total Hours</td>
+            <!-- Slet Projekt Knap -->
             <td>
+                <button onclick="deleteProject(this)" th:attr="data-id=${project.projectId}" class="btn-delete">Slet</button>
             </td>
         </tr>
         <!-- If no projects, display a message -->
         <tr th:if="${#lists.isEmpty(projects)}">
-            <td colspan="4" class="text-center">No projects available. Create one to get started!</td>
+            <td colspan="4" class="no-projects">No projects available. Create one to get started!</td>
         </tr>
         </tbody>
     </table>

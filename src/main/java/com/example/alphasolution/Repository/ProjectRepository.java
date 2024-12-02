@@ -25,6 +25,7 @@ public class ProjectRepository {
 
             while (resultSet.next()) {
                 ProjectModel projectModel = new ProjectModel(
+                        resultSet.getInt("projectid"),
                         resultSet.getString("projectname"),
                         resultSet.getString("description"),
                         resultSet.getInt("totalhours")
