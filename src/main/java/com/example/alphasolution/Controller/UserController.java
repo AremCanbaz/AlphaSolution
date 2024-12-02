@@ -13,7 +13,7 @@ import Service.UserService;
 @Controller
 public class UserController {
 
-    private Userservice userService;
+    private UserService userService;
 
     @GetMapping()
     public String showlogin(){
@@ -22,7 +22,7 @@ public class UserController {
 
     @GetMapping("/login")
     public String processLoginForm(@RequestParam String username, @RequestParam String password){
-        UserModel user = userService.authenticateUser(username, password);
+        UserModel user = userService.authenticate(username, password);
         if(user != null){
             return "redirect:/";
         }
