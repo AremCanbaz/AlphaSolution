@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="da">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alpha Solution Login</title>
+</head>
+<body>
+<form th:action="@{/loginSucces}" method="post">
+  <h1>Login her!</h1>
+  <div>
+    <label for="brugernavn">Brugernavn</label>
+    <input type="text" id="brugernavn" name="username" required>
+    <br>
+    <label for="adgangskode">Password</label>
+    <input type="password" id="adgangskode" name="password" required>
+    <br>
+    <button type="submit">Log ind</button>
+  </div>
+  <div>
+    <h2>Har du ikke en bruger?</h2>
+    <button type="button" onclick="window.location.href='/createusersite'">Opret bruger</button>
+  </div>
+</form>
+</body>
+</html>

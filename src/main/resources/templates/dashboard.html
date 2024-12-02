@@ -15,7 +15,6 @@
             <th>Project Name</th>
             <th>Description</th>
             <th>Total Hours</th>
-            <th>Actions</th>
         </tr>
         </thead>
         <tbody>
@@ -25,8 +24,6 @@
             <td th:text="${project.description}">Description</td>
             <td th:text="${project.totalHours}">Total Hours</td>
             <td>
-                <a th:href="@{/project/details(projectId=${project.projectId})}" class="btn btn-primary btn-sm">View Details</a>
-                <a th:href="@{/project/delete(projectId=${project.projectId})}" class="btn btn-danger btn-sm">Delete</a>
             </td>
         </tr>
         <!-- If no projects, display a message -->
@@ -35,7 +32,6 @@
         </tr>
         </tbody>
     </table>
-    <a href="/project/create" class="btn btn-success">Create New Project</a>
 </div>
 </body>
 </html>

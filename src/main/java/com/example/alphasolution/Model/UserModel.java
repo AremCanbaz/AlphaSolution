@@ -1,7 +1,7 @@
-package Model;
+package com.example.alphasolution.Model;
 
 public class UserModel {
-    private Long userid;
+    private int userid;
     private String username;
     private String password;
     private String email;
@@ -14,10 +14,10 @@ public class UserModel {
     public UserModel(){
 
     }
-    public Long getId(){
+    public int getId(){
         return userid;
     }
-    public void setId(Long id){
+    public void setId(int id){
         this.userid = id;
     }
     public String getUsername(){

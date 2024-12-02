@@ -2,12 +2,14 @@ package com.example.alphasolution.Service;
 
 import com.example.alphasolution.Model.ProjectModel;
 import com.example.alphasolution.Repository.ProjectRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 @Service
 
 public class ProjectService {
+    @Autowired
     ProjectRepository projectRepository;
 
 public ArrayList<ProjectModel> projectList(int userId){
