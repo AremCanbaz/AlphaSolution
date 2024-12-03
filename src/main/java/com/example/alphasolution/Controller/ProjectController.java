@@ -4,11 +4,10 @@ import com.example.alphasolution.Model.ProjectModel;
 import com.example.alphasolution.Service.ProjectService;
 import com.example.alphasolution.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 
 import java.util.ArrayList;
@@ -28,7 +27,19 @@ public class ProjectController {
         model.addAttribute("userId", userId);
         model.addAttribute("username", username);
         System.out.println(projects);
-        return "dashboard"; // Navnet på din Thymeleaf-skabelon
+        return "dashboard";
+    }
+
+    @PostMapping("/createproject")
+    public String addProject(@RequestParam("userId")int userId , @RequestParam("projectname") String projectname, @RequestParam("description") String description) {
+        projectService.createProject(projectname, description, userId);
+
+      return "redirect:/dashboard?userId=" + userId;
+    }
+    @GetMapping("createprojectview")
+    public String createProject(@RequestParam("userId") int userid, Model model) {
+        model.addAttribute("userId", userid);
+        return "createproject";
     }
 
 }

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/createproject.css}">
+    <title>Projektformular</title>
+</head>
+<body>
+<form th:action="@{/createproject}" method="POST">
+    <h1>Opret Projekt</h1>
+    <label for="projectname">Navn</label>
+    <input type="text" id="projectname" name="projectname" placeholder="Indtast projektets navn" required>
+
+    <label for="description">Beskrivelse</label>
+    <input type="text" id="description" name="description" placeholder="Indtast en kort beskrivelse" required>
+    <input type="hidden" name="userId" th:value="${userId}">
+
+    <button type="submit">Opret</button>
+</form>
+</body>
+</html>

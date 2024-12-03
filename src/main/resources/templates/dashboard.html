@@ -12,7 +12,10 @@
 
     <!-- Opret Projekt Knappen -->
     <div class="create-project">
-        <button onclick="window.location.href='/createProject'" class="btn-create">Opret Projekt</button>
+        <form th:action="@{/createprojectview}" method="get">
+        <button class="btn-create">Opret Projekt</button>
+            <input type="hidden" name="userId" th:value="${userId}" />
+        </form>
     </div>
 
     <h2>Your Projects</h2>

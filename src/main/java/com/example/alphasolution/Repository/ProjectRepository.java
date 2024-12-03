@@ -37,11 +37,11 @@ public class ProjectRepository {
         }
         return projects;
     }
-    public void createProject(String projectName, String description, int userId) {
-        String createQuery = "INSERT INTO projects (projectname, description) VALUES (?, ?, ?)";
+    public void createProject(String projectname, String description, int userId) {
+        String createQuery = "INSERT INTO projects (projectname, description, userId) VALUES (?, ?, ?)";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(createQuery);
-            preparedStatement.setString(1, projectName);
+            preparedStatement.setString(1, projectname);
             preparedStatement.setString(2, description);
             preparedStatement.setInt(3, userId);
             preparedStatement.executeUpdate();
