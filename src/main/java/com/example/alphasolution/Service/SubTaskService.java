@@ -15,4 +15,7 @@ public class SubTaskService {
     public ArrayList<SubTaskModel> getAllSubTasks(int projectid) {
         return subTaskRepository.getSubTaskesById(projectid);
     }
+    public String getSubtaskName(int subtaskId) {
+        return subTaskRepository.getTaskNameById(subtaskId);
+    }
 }

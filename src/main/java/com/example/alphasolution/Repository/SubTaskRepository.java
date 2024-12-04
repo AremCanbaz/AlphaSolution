@@ -35,4 +35,22 @@ public class SubTaskRepository {
         }
         return subTasks;
     }
+
+    public String getTaskNameById(int subTaskId) {
+        String query = "SELECT subtaskname FROM subtasks WHERE subtaskid = ?";
+        try {
+            PreparedStatement preparedStatement = con.prepareStatement(query);
+            preparedStatement.setInt(1, subTaskId);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getString("subtaskname");
+                }
+
+            }
+        }
+        catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+        }
+        return null;
+    }
 }

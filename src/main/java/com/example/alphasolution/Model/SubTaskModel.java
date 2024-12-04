@@ -18,14 +18,6 @@ public class SubTaskModel {
         this.subTaskStatus = subTaskStatus;
     }
 
-
-    public SubTaskModel(int subTaskId, String subTaskName, String subTaskDescription, int subTaskTime, boolean subTaskStatus) {
-        this.subTaskId = subTaskId;
-        this.subTaskName = subTaskName;
-        this.subTaskDescription = subTaskDescription;
-        this.subTaskTime = subTaskTime;
-        this.subTaskStatus = subTaskStatus;
-    }
     public int getProjectid() {
         return projectid;
     }
