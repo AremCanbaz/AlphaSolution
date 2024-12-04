@@ -8,7 +8,7 @@
 </head>
 <body>
 <div class="container">
-    <h1>Velkommen til underopgave siden</h1>
+    <h1>Velkommen til Projekt siden</h1>
     <p>Projekt id: <span th:text="${projectid}"></span> </p>
     <p>Projekt navn: <span th:text="${projectname}"></span> </p>
 
@@ -28,12 +28,13 @@
             <th>Underopgave tids estimat </th>
             <th>Underopgavens status</th>
             <th>Slet Subtask</th>
+            <th>Edit projekt</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="subtask : ${subtasks}">
             <td>
-                <a th:href="@{/taskview(subtaskid=${subtask.subTaskId})}"
+                <a th:href="@{/taskview(subTaskId=${subtask.subTaskId})}"
                    class="project-link"
                    th:text="${subtask.subTaskName}">
                     Underopgave navn
@@ -44,13 +45,18 @@
             <td th:classappend="${subtask.subTaskStatus ? 'text-success' : 'text-danger'}"
                 th:text="${subtask.subTaskStatus ? 'Fuldført' : 'I gang'}">
             </td>
-            <!-- Slet SubTask Knap -->
             <td>
-                <!-- Delete Button -->
+                <!-- Slet Button -->
                 <form action="/deleteSubTask" method="post">
                     <input type="hidden" name="subtaskId" th:value="${subtask.subTaskId}" />
                     <input type="hidden" name="projectid" th:value="${projectid}" />
                     <button type="submit" class="btn-delete">Delete</button>
+                </form>
+            </td>
+            <td>
+                <form action="/editsubtask" method="get">
+                    <input type="hidden" name="subTaskId" th:value="${subtask.subTaskId}" />
+                    <button type="submit" class="btn-edit">Edit</button>
                 </form>
             </td>
         </tr>

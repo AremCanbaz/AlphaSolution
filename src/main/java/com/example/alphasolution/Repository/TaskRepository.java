@@ -10,6 +10,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import static com.example.alphasolution.Repository.DbManager.connection;
+
 @Repository
 public class TaskRepository {
     Connection con = DbManager.getConnection();
@@ -38,5 +40,32 @@ public class TaskRepository {
             e.printStackTrace();
         }
         return tasks;
+    }
+    public void deleteTask(int taskId) {
+        String deleteQuery = "DELETE FROM tasks WHERE taskid = ?";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(deleteQuery);
+            preparedStatement.setInt(1, taskId);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+}
+    public String getTaskNameById(int taskId) {
+        String query = "SELECT taskname FROM tasks WHERE taskid = ?";
+        try {
+            PreparedStatement preparedStatement = con.prepareStatement(query);
+            preparedStatement.setInt(1, taskId);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getString("taskname");
+                }
+
+            }
+        }
+        catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+        }
+        return null;
     }
 }

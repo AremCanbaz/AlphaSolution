@@ -15,4 +15,9 @@ public class TaskService {
     public ArrayList<TaskModel> getTasks(int subTaskId) {
         return taskRepository.getTaskesById(subTaskId);
     }
+    public void deleteTask(int taskId) {taskRepository.deleteTask(taskId);
+    }
+    public String getTaskName(int subtaskId) {
+        return taskRepository.getTaskNameById(subtaskId);
+    }
 }

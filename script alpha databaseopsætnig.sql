@@ -22,6 +22,7 @@ create table subtasks (
     SubTaskName varchar(255) not null,        -- navn på opgaven
     IsCompleted boolean default false,        -- status: om opgaven 
     TotalHours int default 0,      -- samlede timer for subtask
+    SubtaskDescription text,
     foreign key (projectid) references projects(projectid) on delete cascade
 );
 

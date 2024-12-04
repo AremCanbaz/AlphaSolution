@@ -43,7 +43,7 @@
             <td th:text="${project.totalHours}">Total Hours</td>
             <!-- Slet Projekt Knap -->
             <td>
-                <button onclick="deleteProject(this)" th:attr="data-id=${project.projectId}" class="btn-delete">Slet</button>
+                    <button onclick="deleteProject(this)" th:attr="data-id=${project.projectId}" class="btn-delete">Slet</button>
             </td>
         </tr>
         <!-- If no projects, display a message -->

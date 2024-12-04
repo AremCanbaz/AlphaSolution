@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <title>Subtask</title>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link th:href="@{/subtaskview.css}" rel="stylesheet">
+    <link th:href="@{/taskview.css}" rel="stylesheet">
 </head>
 <body>
 <div class="container">
@@ -21,6 +21,8 @@
             <th>Underopgavens beskrivelse</th>
             <th>Underopgave tids estimat </th>
             <th>Underopgavens status</th>
+            <th>Slet Task</th>
+            <th>Edit Task</th>
         </tr>
         </thead>
         <tbody>
@@ -35,9 +37,18 @@
             <td th:classappend="${task.taskStatus ? 'text-success' : 'text-danger'}"
                 th:text="${task.taskStatus ? 'Fuldført' : 'I gang'}">
             </td>
+            <td>
+                <!-- Slet Button -->
+                <form action="/deleteTask" method="post">
+                    <input type="hidden" name="taskId" th:value="${task.taskId}" />
+                    <input type="hidden" name="subTaskId" th:value="${subtaskid}" />
+                    <button type="submit" class="btn-delete">Delete</button>
+                </form>
+            </td>
+
         </tr>
         <tr th:if="${#lists.isEmpty(tasks)}">
-            <td colspan="4" class="no-projects">Ingen underopgaver her, opret en nu for at komme igang</td>
+            <td colspan="6" class="no-projects">Ingen underopgaver her, opret en nu for at komme igang</td>
 
         </tr>
         </tbody>
