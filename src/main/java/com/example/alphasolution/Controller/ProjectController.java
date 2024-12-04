@@ -36,10 +36,28 @@ public class ProjectController {
 
       return "redirect:/dashboard?userId=" + userId;
     }
-    @GetMapping("createprojectview")
+    @GetMapping("/createprojectview")
     public String createProject(@RequestParam("userId") int userid, Model model) {
         model.addAttribute("userId", userid);
         return "createproject";
+    }
+
+    @GetMapping("/editproject")
+    public String editProject(@RequestParam("projectid") int projectid,@RequestParam("userid") int userid, Model model) {
+        ProjectModel project = projectService.getProjectById(projectid);
+        model.addAttribute("projectid", projectid);
+        model.addAttribute("userId", userid);
+        model.addAttribute("project",project);
+        return "editproject";
+    }
+    @PostMapping("/editprojectSucces")
+    public String editProjectSucces(@RequestParam("projectName") String projectName,
+                                    @RequestParam("description") String description,
+                                    @RequestParam("projectid") int projectid,
+                                    @RequestParam("userid") int userid,
+                                    Model model) {
+        projectService.editProject(projectName, description, projectid);
+        return "redirect:/dashboard?userId=" + userid;
     }
 
 }
