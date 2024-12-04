@@ -80,29 +80,42 @@ public class SubTaskRepository {
     }
 
     public void getTotalHours(int subtaskId) {
-        String query = "SELECT SUM(hoursspent) FROM tasks WHERE subtaskid = ?";
+        String query = "SELECT SUM(hoursspent) AS total_hours FROM tasks WHERE subtaskid = ?";
         int totalHours = 0;
+
+        // Beregn total_hours fra tasks-tabellen
         try {
             PreparedStatement preparedStatement = con.prepareStatement(query);
             preparedStatement.setInt(1, subtaskId);
             ResultSet resultSet = preparedStatement.executeQuery();
 
-
             if (resultSet.next()) {
-                totalHours = resultSet.getInt("hoursspent");
+                totalHours = resultSet.getInt("total_hours");
             }
+            resultSet.close();
+            preparedStatement.close();
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
         }
+
+        // Opdater total_hours i subtasks-tabellen
         try {
+            String query2 = "UPDATE subtasks SET totalhours = ? WHERE subtaskid = ?";
+            PreparedStatement updateStatement = con.prepareStatement(query2);
+            updateStatement.setInt(1, totalHours);
+            updateStatement.setInt(2, subtaskId);
 
+            int rowsUpdated = updateStatement.executeUpdate(); // Udfør opdatering
+            if (rowsUpdated > 0) {
+                System.out.println("Total hours updated successfully.");
+            } else {
+                System.out.println("No rows were updated.");
+            }
 
-            String query2 = "INSERT INTO subtasks (totalhours) VALUES (?) where subtaskid = ?";
-            PreparedStatement insertstatement = con.prepareStatement(query2);
-            insertstatement.setInt(1, totalHours);
-            insertstatement.setInt(2, subtaskId);
-        } catch (SQLException e){
+            updateStatement.close();
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
 }
