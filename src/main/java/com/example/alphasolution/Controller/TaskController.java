@@ -26,6 +26,7 @@ public class TaskController {
     public String subtaskview(@RequestParam int subtaskid, Model model) {
         ArrayList<TaskModel> tasks = taskService.getTasks(subtaskid);
         String subtaskName = subTaskService.getSubtaskName(subtaskid);
+        subTaskService.getTotalHoursForSubTask(subtaskid);
         model.addAttribute("tasks", tasks);
         model.addAttribute("subtaskid", subtaskid);
         model.addAttribute("subtaskname", subtaskName);

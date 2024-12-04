@@ -25,4 +25,7 @@ public void deleteProject(int projectId){
 public String getProjectName(int projectId){
     return projectRepository.getProjectNameById(projectId);
 }
+public void getTotalHours(int projectId){
+    projectRepository.getTotalHours(projectId);
+}
 }
