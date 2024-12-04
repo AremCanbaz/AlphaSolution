@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
@@ -27,5 +29,18 @@ public class SubTaskController {
         model.addAttribute("projectid", projectid);
         model.addAttribute("projectname", projectName);
         return "subtaskview";
+    }
+
+    @GetMapping("/createSubTaskView")
+    public String createsubtaskview(@RequestParam int projectid, Model model) {
+        model.addAttribute("projectid", projectid);
+        return "createsubtask";
+
+    }
+    @PostMapping("/createsubtaskaction")
+    public String createsubtask(@RequestParam int projectid, @RequestParam String subtaskname,@RequestParam String subtaskdescription) {
+        subTaskService.createSubTask(projectid,subtaskname,subtaskdescription);
+        return "redirect:/subtaskview?projectid=" + projectid;
+
     }
 }

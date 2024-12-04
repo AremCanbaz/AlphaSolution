@@ -13,9 +13,9 @@
     <p>Projekt navn: <span th:text="${projectname}"></span> </p>
 
     <div class="create-project">
-        <form th:action="@{/createsubtask}" method="get">
+        <form th:action="@{/createSubTaskView}" method="get">
             <button class="btn-create"> Opret Subtask</button>
-                <input type="hidden" name="projectId" th:value="${projectid}">
+                <input type="hidden" name="projectid" th:value="${projectid}">
         </form>
     </div>
 
