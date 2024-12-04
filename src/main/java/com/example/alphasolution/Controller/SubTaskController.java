@@ -29,20 +29,25 @@ public class SubTaskController {
         model.addAttribute("projectname", projectName);
         return "subtaskview";
     }
+
     @PostMapping("/deleteSubTask")
-    public String deleteSubTask(@RequestParam("subtaskId") int subTaskId,@RequestParam("projectid") int projectId){
+    public String deleteSubTask(@RequestParam("subtaskId") int subTaskId, @RequestParam("projectid") int projectId) {
         subTaskService.deleteSubTask(subTaskId);
         return "redirect:/subtaskview?projectid=" + projectId; // Redirect tilbage til samme side
     }
-       @GetMapping("/createSubTaskView")
+
+    @GetMapping("/createSubTaskView")
     public String createsubtaskview(@RequestParam int projectid, Model model) {
         model.addAttribute("projectid", projectid);
         return "createsubtask";
 
     }
+
     @PostMapping("/createsubtaskaction")
-    public String createsubtask(@RequestParam int projectid, @RequestParam String subtaskname,@RequestParam String subtaskdescription) {
-        subTaskService.createSubTask(projectid,subtaskname,subtaskdescription);
+    public String createsubtask(@RequestParam int projectid, @RequestParam String subtaskname, @RequestParam String subtaskdescription) {
+        subTaskService.createSubTask(projectid, subtaskname, subtaskdescription);
         return "redirect:/subtaskview?projectid=" + projectid;
+
+    }
 
 }
