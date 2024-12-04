@@ -11,7 +11,12 @@
     <h1>Velkommen til underopgave siden</h1>
     <p>Underopgave id: <span th:text="${subtaskid}"></span> </p>
     <p>Underopgave navn: <span th:text="${subtaskname}"></span> </p>
-
+    <div class="create-project">
+        <form th:action="@{/opretopgaveview}" method="get">
+            <button class="btn-create"> Opret Opgave</button>
+            <input type="hidden" name="subtaskid" th:value="${subtaskid}">
+        </form>
+    </div>
 
     <h2>Dine underopgaver</h2>
     <table>

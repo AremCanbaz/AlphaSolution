@@ -15,4 +15,7 @@ public class TaskService {
     public ArrayList<TaskModel> getTasks(int subTaskId) {
         return taskRepository.getTaskesById(subTaskId);
     }
+    public void createtask (int subtaskid, String taskdescription, String taskname, int time){
+        taskRepository.createTask(subtaskid, taskdescription, taskname, time);
+    }
 }

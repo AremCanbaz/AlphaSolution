@@ -39,4 +39,16 @@ public class TaskRepository {
         }
         return tasks;
     }
+    public void createTask(int subtaskid, String taskdescription, String taskname, int time) {
+        String query1 = "INSERT INTO tasks (subtaskid, taskname, description, hoursspent) VALUES (?,?,?,?)";
+        try {
+            PreparedStatement preparedStatement = con.prepareStatement(query1);
+            preparedStatement.setInt(1, subtaskid);
+            preparedStatement.setString(2, taskname);
+            preparedStatement.setString(3, taskdescription);
+            preparedStatement.setInt(4, time);
+            preparedStatement.executeUpdate();
+        }  catch (SQLException sqlException) {
+            sqlException.printStackTrace();}
+    }
 }
