@@ -14,6 +14,7 @@ import java.util.ArrayList;
 
 public class ProjectRepository {
     Connection connection = DbManager.getConnection();
+
     // Metode til at hente alle projekter tilknyttet den enkelte bruger.
     public ArrayList<ProjectModel> getAllProjectsById(int userId) {
         ArrayList<ProjectModel> projects = new ArrayList<>();
@@ -37,6 +38,7 @@ public class ProjectRepository {
         }
         return projects;
     }
+
     public void createProject(String projectname, String description, int userId) {
         String createQuery = "INSERT INTO projects (projectname, description, userId) VALUES (?, ?, ?)";
         try {
@@ -51,15 +53,33 @@ public class ProjectRepository {
         }
 
     }
+
     public void deleteProject(int projectId) {
         String deleteQuery = "DELETE FROM projects WHERE projectid = ?";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(deleteQuery);
-            preparedStatement.setInt(1,projectId);
+            preparedStatement.setInt(1, projectId);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
+    public String getProjectNameById(int projectId) {
+        String query = "SELECT projectname FROM projects WHERE projectid = ?";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, projectId);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getString("projectname");
+                }
+
+            }
+        }
+        catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+        }
+        return null;
+    }
 }

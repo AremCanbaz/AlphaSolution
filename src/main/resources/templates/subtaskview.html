@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Subtask</title>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link th:href="@{/subtaskview.css}" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <h1>Velkommen til underopgave siden</h1>
+    <p>Projekt id: <span th:text="${projectid}"></span> </p>
+    <p>Projekt navn: <span th:text="${projectname}"></span> </p>
+
+    <div class="create-project">
+        <form th:action="@{/createsubtask}" method="get">
+            <button class="btn-create"> Opret Subtask</button>
+                <input type="hidden" name="projectId" th:value="${projectid}">
+        </form>
+    </div>
+
+    <h2>Dine underopgaver</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Underopgave navn</th>
+            <th>Underopgavens beskrivelse</th>
+            <th>Underopgave tids estimat </th>
+            <th>Underopgavens status</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="subtask : ${subtasks}">
+            <td>
+                <a th:href="@{'/subtask/{id}'(id=${subtask.subTaskId})}"
+                   class="project-link"
+                   th:text="${subtask.subTaskName}">
+                    Underopgave navn
+                </a>
+            </td>
+            <td th:text="${subtask.subTaskDescription}">Beskrivelse</td>
+            <td th:text="${subtask.subTaskTime}">Antal timer</td>
+            <td th:classappend="${subtask.subTaskStatus ? 'text-success' : 'text-danger'}"
+                th:text="${subtask.subTaskStatus ? 'Fuldført' : 'I gang'}">
+            </td>
+        </tr>
+        <tr th:if="${#lists.isEmpty(subtasks)}">
+            <td colspan="4" class="no-projects">Ingen underopgaver her, opret en nu for at komme igang</td>
+
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

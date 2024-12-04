@@ -6,9 +6,9 @@
 </head>
 <body>
 <div class="container">
-    <h1>Welcome to Your Dashboard</h1>
-    <p>User ID: <span th:text="${userId}"></span></p>
-    <p>Username: <span th:text="${username}"></span></p>
+    <h1>Velkommen til dit Dashboard</h1>
+    <p>Bruger ID: <span th:text="${userId}"></span></p>
+    <p>Brugernavn: <span th:text="${username}"></span></p>
 
     <!-- Opret Projekt Knappen -->
     <div class="create-project">
@@ -18,14 +18,14 @@
         </form>
     </div>
 
-    <h2>Your Projects</h2>
+    <h2>Dine projekter</h2>
     <table>
         <thead>
         <tr>
-            <th>Project Name</th>
-            <th>Description</th>
-            <th>Total Hours</th>
-            <th>Actions</th>
+            <th>Projekt Navn</th>
+            <th>Beskrivelse</th>
+            <th>Total antal timer</th>
+            <th>Funktioner</th>
         </tr>
         </thead>
         <tbody>
@@ -33,7 +33,11 @@
         <tr th:each="project : ${projects}">
             <!-- Klikbart Projektnavn -->
             <td>
-                <a th:href="@{'/projects/' + ${project.projectId}}" class="project-link" th:text="${project.projectName}">Project Name</a>
+                <a th:href="@{/subtaskview(projectid=${project.projectId})}"
+                   class="project-link"
+                   th:text="${project.projectName}">
+                    Project Name
+                </a>
             </td>
             <td th:text="${project.description}">Description</td>
             <td th:text="${project.totalHours}">Total Hours</td>

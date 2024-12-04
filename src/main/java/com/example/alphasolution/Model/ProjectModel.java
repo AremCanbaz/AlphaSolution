@@ -9,6 +9,7 @@ public class ProjectModel {
     public ProjectModel() {}
 
     public ProjectModel(int projectId, String projectName, String description, int totalHours) {
+        this.projectId = projectId;
         this.projectName = projectName;
         this.description = description;
         this.totalHours = totalHours;

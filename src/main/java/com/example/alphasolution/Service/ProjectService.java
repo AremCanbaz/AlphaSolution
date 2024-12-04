@@ -21,4 +21,8 @@ public void createProject(String projectName, String description, int userId){
 public void deleteProject(int projectId){
     projectRepository.deleteProject(projectId);
 }
+
+public String getProjectName(int projectId){
+    return projectRepository.getProjectNameById(projectId);
+}
 }

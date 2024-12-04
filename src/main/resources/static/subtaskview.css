@@ -1,0 +1,153 @@
+/* Grundlæggende styling */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #121212; /* Mørk baggrund */
+    color: #e0e0e0; /* Lys tekst */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.container {
+    background-color: #1e1e1e; /* Kontrast mørk baggrund */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    padding: 20px 30px;
+    width: 100%;
+    max-width: 800px;
+    box-sizing: border-box;
+}
+
+h1, h2 {
+    color: #ffffff; /* Hvid tekst */
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+p {
+    text-align: center;
+    font-size: 14px;
+    color: #b0b0b0; /* Lys grå tekst */
+}
+
+/* Tabel styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+thead {
+    background-color: #333;
+    color: #e0e0e0;
+}
+
+thead th {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 2px solid #444;
+}
+
+tbody tr {
+    background-color: #2c2c2c;
+    border-bottom: 1px solid #444;
+}
+
+tbody tr:hover {
+    background-color: #3a3a3a;
+}
+
+tbody td {
+    padding: 10px;
+    text-align: left;
+}
+
+.no-projects {
+    text-align: center;
+    font-style: italic;
+    color: #b0b0b0;
+    padding: 15px;
+}
+
+/* Reserveret plads til knapper eller interaktioner */
+td:last-child {
+    text-align: center;
+}
+
+/* Opret Projekt Knap */
+.create-project {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.btn-create {
+    padding: 10px 20px;
+    background-color: #4caf50; /* Grøn */
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.btn-create:hover {
+    background-color: #45a049; /* Mørkere grøn */
+    transform: scale(1.05); /* Forstørrelse */
+}
+
+/* Klikbare Projektnavne */
+.project-link {
+    color: #4caf50;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s, text-decoration 0.3s;
+}
+
+.project-link:hover {
+    text-decoration: underline;
+    color: #45a049;
+}
+
+/* Slet Knap */
+.btn-delete {
+    padding: 5px 10px;
+    background-color: #e53935; /* Rød */
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.btn-delete:hover {
+    background-color: #d32f2f; /* Mørkere rød */
+    transform: scale(1.05); /* Forstørrelse */
+}
+
+/* Klik-effekt for knapper */
+button:active, .btn-delete:active, .btn-create:active {
+    transform: scale(0.95); /* Krymp ved klik */
+}
+
+
+.text-success {
+    color: green;
+}
+
+.text-danger {
+    color: red;
+}
+
+.fa-check {
+    content: '\f00c'; /* Font Awesome's check icon */
+}
+
+.fa-times {
+    content: '\f00d'; /* Font Awesome's times icon */
+}
