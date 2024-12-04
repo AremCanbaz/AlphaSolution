@@ -15,7 +15,7 @@ form {
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
     padding: 20px 30px;
-    width: 100%;
+    width: 90%; /* Responsiv bredde */
     max-width: 400px;
     box-sizing: border-box;
 }
@@ -28,7 +28,7 @@ h1 {
 }
 
 /* Input felter styling */
-input[type="text"], input[type="password"] {
+input[type="text"], input[type="password"], input[type="email"] {
     width: 100%;
     padding: 10px;
     margin: 10px 0 20px;
@@ -37,10 +37,10 @@ input[type="text"], input[type="password"] {
     background-color: #2c2c2c;
     color: #e0e0e0;
     box-sizing: border-box;
-    transition: border-color 0.3s, box-shadow 0.3s; /* Smooth transition for focus effect */
+    transition: border-color 0.3s, box-shadow 0.3s;
 }
 
-input[type="text"]:focus, input[type="password"]:focus {
+input:focus {
     outline: none;
     border-color: #4caf50; /* Grøn border ved fokus */
     box-shadow: 0 0 8px #4caf50;
@@ -63,16 +63,16 @@ button[type="submit"] {
     border-radius: 4px;
     font-size: 16px;
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s; /* Transition for hover and click effects */
+    transition: background-color 0.3s ease, transform 0.2s;
 }
 
 /* Hover-effekt på knap */
 button[type="submit"]:hover {
     background-color: #45a049; /* Mørkere grøn ved hover */
-    transform: scale(1.05); /* Forstørrelse ved hover */
+    transform: scale(1.05);
 }
 
 /* Klik-effekt på knap */
 button[type="submit"]:active {
-    transform: scale(0.95); /* Krympning ved klik */
+    transform: scale(0.95);
 }
