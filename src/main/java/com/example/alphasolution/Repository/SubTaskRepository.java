@@ -66,4 +66,15 @@ public class SubTaskRepository {
         }
         return null;
     }
+    public void createSubTask(int projectid, String subtaskdescription, String subtaskname) {
+        String query1 = "INSERT INTO subtasks (projectid, subtaskname, subtaskdescription) VALUES (?,?,?)";
+        try {
+        PreparedStatement preparedStatement = con.prepareStatement(query1);
+        preparedStatement.setInt(1, projectid);
+        preparedStatement.setString(2, subtaskdescription);
+        preparedStatement.setString(3, subtaskname);
+        preparedStatement.executeUpdate();
+    }  catch (SQLException sqlException) {
+        sqlException.printStackTrace();}
+    }
 }

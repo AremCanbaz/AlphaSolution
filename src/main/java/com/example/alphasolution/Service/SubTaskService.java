@@ -21,4 +21,8 @@ public class SubTaskService {
     public String getSubtaskName(int subtaskId) {
         return subTaskRepository.getTaskNameById(subtaskId);
     }
+
+    public void createSubTask(int projectid, String subtaskName, String subtaskDesc) {
+        subTaskRepository.createSubTask(projectid, subtaskName, subtaskDesc);
+    }
 }
