@@ -13,7 +13,7 @@ public class SubTaskRepository {
     Connection con = DbManager.getConnection();
 
     public ArrayList<SubTaskModel> getSubTaskesById(
-    int projectid) {
+            int projectid) {
         ArrayList<SubTaskModel> subTasks = new ArrayList<>();
 
         try {
@@ -32,7 +32,7 @@ public class SubTaskRepository {
                 );
                 subTasks.add(subTask);
             }
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return subTasks;
@@ -60,21 +60,49 @@ public class SubTaskRepository {
                 }
 
             }
-        }
-        catch (SQLException sqlException) {
+        } catch (SQLException sqlException) {
             sqlException.printStackTrace();
         }
         return null;
     }
+
     public void createSubTask(int projectid, String subtaskdescription, String subtaskname) {
         String query1 = "INSERT INTO subtasks (projectid, subtaskname, subtaskdescription) VALUES (?,?,?)";
         try {
-        PreparedStatement preparedStatement = con.prepareStatement(query1);
-        preparedStatement.setInt(1, projectid);
-        preparedStatement.setString(2, subtaskdescription);
-        preparedStatement.setString(3, subtaskname);
-        preparedStatement.executeUpdate();
-    }  catch (SQLException sqlException) {
-        sqlException.printStackTrace();}
+            PreparedStatement preparedStatement = con.prepareStatement(query1);
+            preparedStatement.setInt(1, projectid);
+            preparedStatement.setString(2, subtaskdescription);
+            preparedStatement.setString(3, subtaskname);
+            preparedStatement.executeUpdate();
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+        }
+    }
+
+    public void getTotalHours(int subtaskId) {
+        String query = "SELECT SUM(hoursspent) FROM tasks WHERE subtaskid = ?";
+        int totalHours = 0;
+        try {
+            PreparedStatement preparedStatement = con.prepareStatement(query);
+            preparedStatement.setInt(1, subtaskId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+
+            if (resultSet.next()) {
+                totalHours = resultSet.getInt("hoursspent");
+            }
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+        }
+        try {
+
+
+            String query2 = "INSERT INTO subtasks (totalhours) VALUES (?) where subtaskid = ?";
+            PreparedStatement insertstatement = con.prepareStatement(query2);
+            insertstatement.setInt(1, totalHours);
+            insertstatement.setInt(2, subtaskId);
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
     }
 }
