@@ -6,6 +6,8 @@ import org.springframework.stereotype.Repository;
 import java.sql.*;
 import java.util.ArrayList;
 
+import static com.example.alphasolution.Repository.DbManager.connection;
+
 @Repository
 public class SubTaskRepository {
     Connection con = DbManager.getConnection();
@@ -34,6 +36,17 @@ public class SubTaskRepository {
             e.printStackTrace();
         }
         return subTasks;
+    }
+
+    public void deleteSubTask(int subTaskId) {
+        String deleteQuery = "DELETE FROM subtasks WHERE subtaskid = ?";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(deleteQuery);
+            preparedStatement.setInt(1, subTaskId);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public String getTaskNameById(int subTaskId) {

@@ -34,11 +34,24 @@ p {
     color: #b0b0b0; /* Lys grå tekst */
 }
 
-/* Tabel styling */
 table {
     width: 100%;
+    table-layout: fixed;
     border-collapse: collapse;
     margin-top: 20px;
+}
+
+table th,
+table td {
+    padding: 10px;
+    text-align: left;
+    word-wrap: break-word;
+}
+
+table th:last-child,
+table td:last-child {
+    width: 150px;
+    text-align: center;
 }
 
 thead {
@@ -115,6 +128,8 @@ td:last-child {
 
 /* Slet Knap */
 .btn-delete {
+    display: block;
+    margin: 0 auto;
     padding: 5px 10px;
     background-color: #e53935; /* Rød */
     color: #ffffff;

@@ -15,6 +15,9 @@ public class SubTaskService {
     public ArrayList<SubTaskModel> getAllSubTasks(int projectid) {
         return subTaskRepository.getSubTaskesById(projectid);
     }
+    public void deleteSubTask(int subtaskId){
+        subTaskRepository.deleteSubTask(subtaskId);
+    }
     public String getSubtaskName(int subtaskId) {
         return subTaskRepository.getTaskNameById(subtaskId);
     }
