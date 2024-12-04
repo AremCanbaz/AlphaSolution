@@ -5,6 +5,7 @@ import com.example.alphasolution.Repository.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 @Service
 
@@ -28,4 +29,12 @@ public String getProjectName(int projectId){
 public void getTotalHours(int projectId){
     projectRepository.getTotalHours(projectId);
 }
+
+public void editProject(String projectName, String description, int projectId){
+    projectRepository.editProject(projectId, projectName, description);
+}
+public ProjectModel getProjectById(int projectId){
+    return projectRepository.findById(projectId);
+}
+
 }
