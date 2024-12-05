@@ -116,13 +116,13 @@ public class SubTaskRepository {
             e.printStackTrace();
         }
     }
-    public void editSubtask(int subtaskid, String projectname, String description) {
+    public void editSubtask(int subtaskid, String subtaskName, String description) {
         try {
 
 
             String query = "UPDATE subtasks SET subtaskname = ?, SubtaskDescription = ? WHERE subtaskid = ?";
             PreparedStatement preparedStatement = con.prepareStatement(query);
-            preparedStatement.setString(1, projectname);
+            preparedStatement.setString(1, subtaskName);
             preparedStatement.setString(2, description);
             preparedStatement.setInt(3, subtaskid);
             preparedStatement.executeUpdate();

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/editproject.css}" rel="stylesheet">
+    <title>Edit Project</title>
+</head>
+<body>
+<h1>Edit Project</h1>
+
+<form th:action="@{/edittaskSucces}" method="post">
+    <input type="hidden" name="taskid" th:value="${taskid}" />
+
+    <!-- Opgave navn -->
+    <label for="taskname">Opgave navn:</label>
+    <input type="text" id="taskname" name="taskname" th:value="${taskmodel.taskName}" required />
+    <br><br>
+
+    <!-- Opgave beskrivelse -->
+    <label for="description">Beskrivelse af opgave:</label>
+    <textarea id="description" name="description" th:text="${taskmodel.description}" required></textarea>
+    <br><br>
+
+    <!-- Opgave timer -->
+    <label for="time">Timer:</label>
+    <input type="number" id="time" name="hoursspent" th:value="${taskmodel.hoursspent}" required />
+    <br><br>
+
+    <!-- Opgave status -->
+    <label for="iscompleted">Opgavens status:</label>
+    <input type="checkbox" id="iscompleted" name="iscompleted" value="true" th:checked="${taskmodel.iscompleted}" />
+
+    <!-- Gem ændringer -->
+    <input type="hidden" name="subtaskid" th:value="${subtaskid}" />
+    <button type="submit">Save Changes</button>
+</form>
+
+<br>
+<a th:href="@{/subtaskview(subtask=${subtaskid})}">Tilbage til del opgaver</a>
+</body>
+</html>

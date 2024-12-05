@@ -51,4 +51,65 @@ public class TaskRepository {
         }  catch (SQLException sqlException) {
             sqlException.printStackTrace();}
     }
+    public void editTask(int taskId, String taskname, String description, int hoursspent, boolean isCompleted) {
+        String query = "UPDATE tasks SET taskname = ?, description = ?, hoursspent = ?, iscompleted = ? WHERE taskid = ?";
+
+        try {
+            PreparedStatement preparedStatement = con.prepareStatement(query);
+
+            // Debugging logs
+            System.out.println("Query: " + query);
+            System.out.println("taskname: " + taskname + ", description: " + description + ", hoursspent: " + hoursspent + ", isCompleted: " + isCompleted + ", taskId: " + taskId);
+
+            preparedStatement.setString(1, taskname);
+            preparedStatement.setString(2, description);
+            preparedStatement.setInt(3, hoursspent);
+            preparedStatement.setBoolean(4, isCompleted);
+            preparedStatement.setInt(5, taskId);
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            // Log antal opdaterede rækker
+            System.out.println("Rows affected: " + rowsAffected);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public void deleteTask (int taskId) {
+        String query = "DELETE FROM tasks WHERE taskid = ?";
+
+        try {
+            PreparedStatement preparedStatement = con.prepareStatement(query);
+            preparedStatement.setInt(1, taskId);
+            preparedStatement.executeQuery();
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+        }
+    }
+    public TaskModel getTaskById(int taskId) {
+        String query = "select * from tasks where taskid = ?";
+        try {
+            PreparedStatement preparedStatement = con.prepareStatement(query);
+            preparedStatement.setInt(1,taskId);
+
+            try (ResultSet rs = preparedStatement.executeQuery()) {
+                if (rs.next()) {
+                    return new TaskModel(
+                            rs.getInt("subtaskid"),
+                            rs.getInt("taskid"),
+                            rs.getString("taskName"),
+                            rs.getString("description"),
+                            rs.getInt("hoursspent"),
+                            rs.getBoolean("iscompleted")
+                    );
+                } else {
+                   return null;
+                }
+            }
+
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+        }
+        return null;
+    }
 }

@@ -4,17 +4,17 @@ public class TaskModel {
     int subTaskId;
     int taskid;
     String taskName;
-    String taskDescription;
-    int taskTime;
-    Boolean taskStatus;
+    String description;
+    int hoursspent;
+    Boolean iscompleted;
 
-    public TaskModel(int subTaskId, int taskid, String taskName, String taskDescription, int taskTime, boolean taskStatus) {
+    public TaskModel(int taskid, int subTaskId, String taskName, String description, int hoursspent, boolean iscompleted) {
         this.subTaskId = subTaskId;
         this.taskid = taskid;
         this.taskName = taskName;
-        this.taskDescription = taskDescription;
-        this.taskTime = taskTime;
-        this.taskStatus = taskStatus;
+        this.description = description;
+        this.hoursspent = hoursspent;
+        this.iscompleted = iscompleted;
     }
     public int getSubTaskId() {
         return subTaskId;
@@ -25,7 +25,7 @@ public class TaskModel {
     public int getTaskid() {
         return taskid;
     }
-    public void setTaskid(int subTaskid) {
+    public void setTaskid(int taskid) {
         this.taskid = taskid;
     }
     public String getTaskName() {
@@ -34,23 +34,23 @@ public class TaskModel {
     public void setTaskName(String taskName) {
         this.taskName = taskName;
     }
-    public String getTaskDescription() {
-        return taskDescription;
+    public String getDescription() {
+        return description;
     }
     public void setTaskDescription(String taskDescription) {
-        this.taskDescription = taskDescription;
+        this.description = taskDescription;
     }
-    public int getTaskTime() {
-        return taskTime;
+    public int getHoursspent() {
+        return hoursspent;
     }
-    public void setTaskTime(int taskTime) {
-        this.taskTime = taskTime;
+    public void setHoursspent(int hoursspent) {
+        this.hoursspent = hoursspent;
     }
-    public Boolean getTaskStatus() {
-        return taskStatus;
+    public Boolean getIscompleted() {
+        return iscompleted;
     }
-    public void setTaskStatus(Boolean taskStatus) {
-        this.taskStatus = taskStatus;
+    public void setIscompleted(Boolean iscompleted) {
+        this.iscompleted = iscompleted;
     }
 
 }

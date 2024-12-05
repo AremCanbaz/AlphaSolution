@@ -32,25 +32,24 @@
         <tbody>
         <tr th:each="task : ${tasks}">
             <td>
-                <a th:text="${task.taskName}">
-                    Opgave navn
-                </a>
+                <a th:text="${task.taskName}">Opgave navn</a>
             </td>
-            <td th:text="${task.taskDescription}">Beskrivelse</td>
-            <td th:text="${task.taskTime}">Antal timer</td>
-            <td th:classappend="${task.taskStatus ? 'text-success' : 'text-danger'}"
-                th:text="${task.taskStatus ? 'Fuldført' : 'I gang'}">
+            <td th:text="${task.description}">Beskrivelse</td>
+            <td th:text="${task.hoursspent}">Antal timer</td>
+            <td th:classappend="${task.iscompleted ? 'text-success' : 'text-danger'}"
+                th:text="${task.iscompleted ? 'Fuldført' : 'I gang'}">
             </td>
             <td>
+                <!-- Edit form -->
                 <form th:action="@{/edittask}" method="get" style="display:inline;">
-                    <input type="hidden" name="taskid" th:value="${task.taskid}">
+                    <input type="hidden" name="taskId" th:value="${task.taskid}">
+                    <input type="hidden" name="subtaskid" th:value="${subtaskid}">
                     <button class="btn-edit">Rediger</button>
                 </form>
+
+                <!-- Delete button -->
                 <button onclick="deleteTask(this)" th:attr="data-id=${task.taskid}" class="btn-delete">Slet</button>
             </td>
-        </tr>
-        <tr th:if="${#lists.isEmpty(tasks)}">
-            <td colspan="5" class="no-projects">Ingen underopgaver her, opret en nu for at komme igang</td>
         </tr>
         </tbody>
     </table>

@@ -44,4 +44,42 @@ public class TaskController {
         return "redirect:/taskview?subtaskid=" + subtaskid;
 
     }
+    @PostMapping("deletetask")
+    public String deletetask(@RequestParam int subtaskid, @RequestParam int taskid) {
+        taskService.deletetask(taskid);
+        return "redirect:/taskview?subtaskid=" + subtaskid;
+    }
+    @GetMapping("edittask")
+    public String edittask(@RequestParam int taskId, @RequestParam int subtaskid, Model model) {
+        TaskModel taskModel = taskService.getTask(taskId);
+        if (taskModel == null) {
+            System.out.println("TaskModel is null for taskId: " + taskId);
+            return "error"; // Eller en side, der håndterer fejlen
+        }
+        model.addAttribute("taskid", taskId);
+        model.addAttribute("subtaskid", subtaskid);
+        model.addAttribute("taskmodel", taskModel);
+        return "edittask";
+    }
+    @PostMapping("edittaskSucces")
+    public String edittaskSucces(
+            @RequestParam int taskid,
+            @RequestParam String taskname,
+            @RequestParam String description,
+            @RequestParam int hoursspent,
+            @RequestParam boolean iscompleted,
+            @RequestParam int subtaskid) {
+
+        // Debugging logs
+        System.out.println("taskid: " + taskid);
+        System.out.println("taskname: " + taskname);
+        System.out.println("description: " + description);
+        System.out.println("hoursspent: " + hoursspent);
+        System.out.println("iscompleted: " + iscompleted);
+        System.out.println("subtaskid: " + subtaskid);
+
+        taskService.updatetask(taskid, taskname, description, hoursspent, iscompleted);
+        return "redirect:/taskview?subtaskid=" + subtaskid;
+
+}
 }
