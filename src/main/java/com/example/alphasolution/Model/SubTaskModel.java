@@ -1,71 +1,73 @@
-package com.example.alphasolution.Model;
+package com.example.alphasolution.Controller;
 
-public class SubTaskModel {
-    private int projectid;
-    private int subTaskId;
-    private String subTaskName;
-    private String subTaskDescription;
-    private int subTaskTime;
-    private boolean subTaskStatus;
+import com.example.alphasolution.Model.ProjectModel;
+import com.example.alphasolution.Model.SubTaskModel;
+import com.example.alphasolution.Service.ProjectService;
+import com.example.alphasolution.Service.SubTaskService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import java.util.ArrayList;
 
 
-    public SubTaskModel(int projectid, int subTaskId, String subTaskName,String subTaskDescription, int subTaskTime, boolean subTaskStatus){
-        this.projectid = projectid;
-        this.subTaskId = subTaskId;
-        this.subTaskDescription = subTaskDescription;
-        this.subTaskName = subTaskName;
-        this.subTaskTime = subTaskTime;
-        this.subTaskStatus = subTaskStatus;
-    }
-    public SubTaskModel(int subTaskId, String subTaskName, String subTaskDescription, int projectid){
-        this.projectid = projectid;
-        this.subTaskId = subTaskId;
-        this.subTaskName = subTaskName;
-        this.subTaskDescription = subTaskDescription;
-    }
+@Controller
+public class SubTaskController {
+    @Autowired
+    SubTaskService subTaskService;
+    @Autowired
+    ProjectService projectService;
 
-    public SubTaskModel(int projectid, String subTaskName, String subtaskdescription) {
-        this.projectid = projectid;
-        this.subTaskName = subTaskName;
-        this.subTaskDescription = subtaskdescription;
-    }
-
-    public int getProjectid() {
-        return projectid;
-    }
-    public void setProjectid(int projectid) {
-        this.projectid = projectid;
-    }
-    public int getSubTaskId() {
-        return subTaskId;
-
-    }
-    public void setSubTaskId(int subTaskId) {
-        this.subTaskId = subTaskId;
-    }
-    public String getSubTaskName() {
-        return subTaskName;
-    }
-    public void setSubTaskName(String subTaskName) {
-        this.subTaskName = subTaskName;
-    }
-    public String getSubTaskDescription() {
-        return subTaskDescription;
-    }
-    public void setSubTaskDescription(String subTaskDescription) {
-        this.subTaskDescription = subTaskDescription;
-    }
-    public int getSubTaskTime() {
-        return subTaskTime;
-    }
-    public void setSubTaskTime(int subTaskTime) {
-        this.subTaskTime = subTaskTime;
-    }
-    public boolean isSubTaskStatus() {
-        return subTaskStatus;
-    }
-    public void setSubTaskStatus(boolean subTaskStatus) {
-        this.subTaskStatus = subTaskStatus;
-    }
+    @GetMapping("/subtaskview")
+    public String subtaskview(@RequestParam int projectid, Model model) {
+        ArrayList<SubTaskModel> subtasks = subTaskService.getAllSubTasks(projectid);
+        projectService.getTotalHours(projectid);
+        String projectName = projectService.getProjectName(projectid);
+        model.addAttribute("subtasks", subtasks);
+        model.addAttribute("projectid", projectid);
+        model.addAttribute("projectname", projectName);
+        return "subtaskview";
     }
 
+    @PostMapping("/deleteSubTask")
+    public String deleteSubTask(@RequestParam("subtaskId") int subTaskId, @RequestParam("projectid") int projectId) {
+        subTaskService.deleteSubTask(subTaskId);
+        return "redirect:/subtaskview?projectid=" + projectId; // Redirect tilbage til samme side
+    }
+
+    @GetMapping("/createSubTaskView")
+    public String createsubtaskview(@RequestParam int projectid, Model model) {
+        model.addAttribute("projectid", projectid);
+        return "createsubtask";
+
+    }
+
+    @PostMapping("/createsubtaskaction")
+    public String createsubtask(@RequestParam int projectid, @RequestParam String subtaskname, @RequestParam String subtaskdescription) {
+        subTaskService.createSubTask(projectid, subtaskname, subtaskdescription);
+        return "redirect:/subtaskview?projectid=" + projectid;
+
+    }
+    @GetMapping("/editsubtask")
+    public String editProject(@RequestParam("subtaskid") int subtaskid,@RequestParam("projectid") int projectid, Model model) {
+        SubTaskModel subTaskModel = subTaskService.findSubTaskById(subtaskid);
+        System.out.println("Received subtaskid: " + subtaskid + ", projectid: " + projectid + "subtaskname" + subTaskModel.getSubTaskName());
+        model.addAttribute("subtaskid", subtaskid);
+        model.addAttribute("projectid", projectid);
+        model.addAttribute("subtask",subTaskModel);
+        return "editsubtask";
+    }
+    @PostMapping("/editSubTaskSucces")
+    public String editProjectSucces(@RequestParam("subTaskName") String subTaskName,
+                                    @RequestParam("subTaskDescription") String subTaskDescription,
+                                    @RequestParam("subTaskId") int subTaskId,
+                                    @RequestParam("projectId") int projectId
+    ) {
+        subTaskService.editSubTask(subTaskId, subTaskName, subTaskDescription);
+        return "redirect:/subtaskview?projectid=" + projectId;
+    }
+
+}
