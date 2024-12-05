@@ -1,12 +1,11 @@
 package com.example.alphasolution.Repository;
 
+import com.example.alphasolution.Model.ProjectModel;
 import com.example.alphasolution.Model.SubTaskModel;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.util.ArrayList;
-
-import static com.example.alphasolution.Repository.DbManager.connection;
 
 @Repository
 public class SubTaskRepository {
@@ -41,7 +40,7 @@ public class SubTaskRepository {
     public void deleteSubTask(int subTaskId) {
         String deleteQuery = "DELETE FROM subtasks WHERE subtaskid = ?";
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(deleteQuery);
+            PreparedStatement preparedStatement = con.prepareStatement(deleteQuery);
             preparedStatement.setInt(1, subTaskId);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -116,6 +115,48 @@ public class SubTaskRepository {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+    public void editSubtask(int subtaskid, String projectname, String description) {
+        try {
+
+
+            String query = "UPDATE subtasks SET subtaskname = ?, SubtaskDescription = ? WHERE subtaskid = ?";
+            PreparedStatement preparedStatement = con.prepareStatement(query);
+            preparedStatement.setString(1, projectname);
+            preparedStatement.setString(2, description);
+            preparedStatement.setInt(3, subtaskid);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public SubTaskModel findSubTaskBySubTaskId(int subtaskid){
+        String query = "SELECT * FROM subtasks WHERE subtaskid = ?";
+        try (PreparedStatement preparedStatement = con.prepareStatement(query)) {
+            // Sæt parameteren i forespørgslen
+            preparedStatement.setInt(1, subtaskid);
+            try (ResultSet rs = preparedStatement.executeQuery()) {
+                // Hvis et resultat findes, opret og returner modellen
+                if (rs.next()) {
+                    return new SubTaskModel(
+                            rs.getInt("subtaskid"),
+                            rs.getString("subtaskname"),
+                            rs.getString("SubtaskDescription"),
+                            rs.getInt("projectid") // Brug userid, hvis det er en kolonne
+                    );
+                } else {
+                    // Returnér null, hvis ingen rækker blev fundet
+                    return null;
+                }
+            }
+            catch (SQLException e){
+                e.printStackTrace();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
     }
 
 }

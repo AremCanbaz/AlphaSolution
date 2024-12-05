@@ -2,15 +2,15 @@ package com.example.alphasolution.Model;
 
 public class TaskModel {
     int subTaskId;
-    int subTaskid;
+    int taskid;
     String taskName;
     String taskDescription;
     int taskTime;
     Boolean taskStatus;
 
-    public TaskModel(int subTaskId, int subTaskid, String taskName, String taskDescription, int taskTime, boolean taskStatus) {
+    public TaskModel(int subTaskId, int taskid, String taskName, String taskDescription, int taskTime, boolean taskStatus) {
         this.subTaskId = subTaskId;
-        this.subTaskid = subTaskid;
+        this.taskid = taskid;
         this.taskName = taskName;
         this.taskDescription = taskDescription;
         this.taskTime = taskTime;
@@ -22,11 +22,11 @@ public class TaskModel {
     public void setSubTaskId(int subTaskId) {
         this.subTaskId = subTaskId;
     }
-    public int getSubTaskid() {
-        return subTaskid;
+    public int getTaskid() {
+        return taskid;
     }
-    public void setSubTaskid(int subTaskid) {
-        this.subTaskid = subTaskid;
+    public void setTaskid(int subTaskid) {
+        this.taskid = taskid;
     }
     public String getTaskName() {
         return taskName;

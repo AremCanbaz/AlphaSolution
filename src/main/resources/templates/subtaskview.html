@@ -52,6 +52,12 @@
                     <input type="hidden" name="projectid" th:value="${projectid}" />
                     <button type="submit" class="btn-delete">Delete</button>
                 </form>
+
+                <form action="/editsubtask" method="get">
+                    <input type="hidden" name="subtaskid" th:value="${subtask.subTaskId}" />
+                    <input type="hidden" name="projectid" th:value="${projectid}" />
+                    <button type="submit" class="btn-edit">Rediger</button>
+                </form>
             </td>
         </tr>
         <tr th:if="${#lists.isEmpty(subtasks)}">

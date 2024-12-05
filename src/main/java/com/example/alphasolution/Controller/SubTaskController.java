@@ -1,5 +1,6 @@
 package com.example.alphasolution.Controller;
 
+import com.example.alphasolution.Model.ProjectModel;
 import com.example.alphasolution.Model.SubTaskModel;
 import com.example.alphasolution.Service.ProjectService;
 import com.example.alphasolution.Service.SubTaskService;
@@ -49,6 +50,24 @@ public class SubTaskController {
         subTaskService.createSubTask(projectid, subtaskname, subtaskdescription);
         return "redirect:/subtaskview?projectid=" + projectid;
 
+    }
+    @GetMapping("/editsubtask")
+    public String editProject(@RequestParam("subtaskid") int subtaskid,@RequestParam("projectid") int projectid, Model model) {
+        SubTaskModel subTaskModel = subTaskService.findSubTaskById(subtaskid);
+        System.out.println("Received subtaskid: " + subtaskid + ", projectid: " + projectid + "subtaskname" + subTaskModel.getSubTaskName());
+        model.addAttribute("subtaskid", subtaskid);
+        model.addAttribute("projectid", projectid);
+        model.addAttribute("subtask",subTaskModel);
+        return "editsubtask";
+    }
+    @PostMapping("/editSubTaskSucces")
+    public String editProjectSucces(@RequestParam("subTaskName") String subTaskName,
+                                    @RequestParam("subTaskDescription") String subTaskDescription,
+                                    @RequestParam("subTaskId") int subTaskId,
+                                    @RequestParam("projectId") int projectId
+    ) {
+        subTaskService.editSubTask(subTaskId, subTaskName, subTaskDescription);
+        return "redirect:/subtaskview?projectid=" + projectId;
     }
 
 }

@@ -1,24 +1,24 @@
-/* Grundlæggende styling */
+/* Global styling */
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
+    font-family: 'Arial', sans-serif;
     background-color: #121212; /* Mørk baggrund */
     color: #e0e0e0; /* Lys tekst */
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
     padding: 20px;
     box-sizing: border-box;
+    min-height: 100vh;
 }
 
 .container {
     background-color: #1e1e1e; /* Kontrast mørk baggrund */
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-    padding: 20px 30px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+    padding: 25px 35px;
     width: 100%;
-    max-width: 800px;
+    max-width: 900px;
     box-sizing: border-box;
 }
 
@@ -30,44 +30,36 @@ h1, h2 {
 
 p {
     text-align: center;
-    font-size: 14px;
+    font-size: 16px;
     color: #b0b0b0; /* Lys grå tekst */
+    margin-bottom: 10px;
 }
 
+/* Tabel styling */
 table {
     width: 100%;
-    table-layout: fixed;
     border-collapse: collapse;
     margin-top: 20px;
-}
-
-table th,
-table td {
-    padding: 10px;
-    text-align: left;
-    word-wrap: break-word;
-}
-
-table th:last-child,
-table td:last-child {
-    width: 150px;
-    text-align: center;
+    background-color: #2a2a2a;
+    border-radius: 8px;
+    overflow: hidden;
 }
 
 thead {
-    background-color: #333;
+    background-color: #333333;
     color: #e0e0e0;
 }
 
 thead th {
-    padding: 10px;
+    padding: 12px;
     text-align: left;
-    border-bottom: 2px solid #444;
+    font-size: 14px;
 }
 
 tbody tr {
     background-color: #2c2c2c;
-    border-bottom: 1px solid #444;
+    border-bottom: 1px solid #444444;
+    transition: background-color 0.3s;
 }
 
 tbody tr:hover {
@@ -75,50 +67,23 @@ tbody tr:hover {
 }
 
 tbody td {
-    padding: 10px;
-    text-align: left;
+    padding: 12px;
+    font-size: 14px;
 }
 
 .no-projects {
     text-align: center;
     font-style: italic;
     color: #b0b0b0;
-    padding: 15px;
+    padding: 20px;
 }
 
-/* Reserveret plads til knapper eller interaktioner */
-td:last-child {
-    text-align: center;
-}
-
-/* Opret Projekt Knap */
-.create-project {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.btn-create {
-    padding: 10px 20px;
-    background-color: #4caf50; /* Grøn */
-    color: #ffffff;
-    border: none;
-    border-radius: 4px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s;
-}
-
-.btn-create:hover {
-    background-color: #45a049; /* Mørkere grøn */
-    transform: scale(1.05); /* Forstørrelse */
-}
-
-/* Klikbare Projektnavne */
+/* Links */
 .project-link {
     color: #4caf50;
-    text-decoration: none;
     font-weight: bold;
-    transition: color 0.3s, text-decoration 0.3s;
+    text-decoration: none;
+    transition: color 0.3s ease, text-decoration 0.3s ease;
 }
 
 .project-link:hover {
@@ -126,43 +91,64 @@ td:last-child {
     color: #45a049;
 }
 
-/* Slet Knap */
-.btn-delete {
-    display: block;
-    margin: 0 auto;
-    padding: 5px 10px;
-    background-color: #e53935; /* Rød */
-    color: #ffffff;
+/* Button styling */
+button {
+    cursor: pointer;
     border: none;
     border-radius: 4px;
+    padding: 8px 12px;
     font-size: 14px;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s;
+    transition: transform 0.2s, background-color 0.3s;
+}
+
+.btn-create {
+    background-color: #4caf50;
+    color: #ffffff;
+    margin: 10px 0;
+}
+
+.btn-create:hover {
+    background-color: #45a049;
+    transform: scale(1.05);
+}
+
+.btn-delete {
+    background-color: #e53935;
+    color: #ffffff;
 }
 
 .btn-delete:hover {
-    background-color: #d32f2f; /* Mørkere rød */
-    transform: scale(1.05); /* Forstørrelse */
+    background-color: #d32f2f;
+    transform: scale(1.05);
 }
 
-/* Klik-effekt for knapper */
-button:active, .btn-delete:active, .btn-create:active {
-    transform: scale(0.95); /* Krymp ved klik */
+.btn-edit {
+    background-color: #03a9f4;
+    color: #ffffff;
+    margin-left: 10px;
 }
 
-
-.text-success {
-    color: green;
+.btn-edit:hover {
+    background-color: #0288d1;
+    transform: scale(1.05);
 }
 
-.text-danger {
-    color: red;
-}
+/* Responsiv styling */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
 
-.fa-check {
-    content: '\f00c'; /* Font Awesome's check icon */
-}
+    table {
+        font-size: 13px;
+    }
 
-.fa-times {
-    content: '\f00d'; /* Font Awesome's times icon */
+    thead th, tbody td {
+        padding: 8px;
+    }
+
+    .btn-create, .btn-delete, .btn-edit {
+        font-size: 12px;
+        padding: 6px 10px;
+    }
 }
