@@ -33,4 +33,7 @@ public class TaskService {
     public int getProjectIdBySubtaskId(int subTaskId){
         return taskRepository.getProjectIdbySubtaskId(subTaskId);
     }
+    public void updateSubTaskToTrueIfAllTaskAreDone(int subTaskId){
+        taskRepository.updateSubProjectCompletion(subTaskId);
+    }
 }

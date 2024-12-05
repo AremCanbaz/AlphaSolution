@@ -128,4 +128,41 @@ public class TaskRepository {
         }
         return projectId;
     }
+    public boolean areAllTasksCompleted(int subtaskid) {
+        // SQL-forespørgsel for at hente "is_completed" for alle opgaver i delprojektet
+        String query = "SELECT IsCompleted FROM Tasks WHERE subtaskid = ?";
+        try (PreparedStatement ps = con.prepareStatement(query)) {
+            ps.setInt(1, subtaskid);
+            ResultSet rs = ps.executeQuery();
+
+            // Læs alle opgaver
+            while (rs.next()) {
+                boolean isCompleted = rs.getBoolean("iscompleted");
+
+                // Hvis én opgave ikke er færdig, returner false
+                if (!isCompleted) {
+                    return false;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        // Hvis vi når hertil, betyder det, at alle opgaver er færdige
+        return true;
+    }
+    public void updateSubProjectCompletion(int subProjectId) {
+        // Tjek, om alle opgaver er færdige
+        boolean allTasksCompleted = areAllTasksCompleted(subProjectId);
+
+        // Opdater delprojektets status
+        String query = "UPDATE subtasks SET iscompleted = ? WHERE subtaskid = ?";
+        try (PreparedStatement ps = con.prepareStatement(query)) {
+            ps.setBoolean(1, allTasksCompleted); // Sæt status til true eller false
+            ps.setInt(2, subProjectId);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

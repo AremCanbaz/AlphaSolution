@@ -1,6 +1,5 @@
 package com.example.alphasolution.Controller;
 
-import com.example.alphasolution.Model.ProjectModel;
 import com.example.alphasolution.Model.SubTaskModel;
 import com.example.alphasolution.Service.ProjectService;
 import com.example.alphasolution.Service.SubTaskService;
@@ -24,6 +23,8 @@ public class SubTaskController {
     public String subtaskview(@RequestParam int projectid, Model model) {
         ArrayList<SubTaskModel> subtasks = subTaskService.getAllSubTasks(projectid);
         projectService.getTotalHours(projectid);
+        subTaskService.updateProjectIscomplete(projectid);
+        System.out.println(subtasks);
         int userId = subTaskService.getUseridByProjectId(projectid);
         String projectName = projectService.getProjectName(projectid);
         model.addAttribute("subtasks", subtasks);

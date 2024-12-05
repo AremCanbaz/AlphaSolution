@@ -30,6 +30,7 @@
             <th>Projekt Navn</th>
             <th>Beskrivelse</th>
             <th>Total antal timer</th>
+            <th>Projektets status</th>
             <th>Funktioner</th>
         </tr>
         </thead>
@@ -46,6 +47,8 @@
             </td>
             <td th:text="${project.description}">Description</td>
             <td th:text="${project.totalHours}">Total Hours</td>
+            <td th:classappend="${project.completed ? 'text-success' : 'text-danger'}"
+                th:text="${project.completed ? 'Fuldført' : 'I gang'}"></td>
             <!-- Slet Projekt Knap -->
             <td>
 

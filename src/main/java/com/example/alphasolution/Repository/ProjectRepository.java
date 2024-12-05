@@ -29,7 +29,8 @@ public class ProjectRepository {
                         resultSet.getInt("projectid"),
                         resultSet.getString("projectname"),
                         resultSet.getString("description"),
-                        resultSet.getInt("totalhours")
+                        resultSet.getInt("totalhours"),
+                        resultSet.getBoolean("IsCompleted")
                 );
                 projects.add(projectModel);
             }
@@ -148,7 +149,9 @@ public class ProjectRepository {
                             rs.getInt("projectid"),
                             rs.getString("projectname"),
                             rs.getString("description"),
-                            rs.getInt("userid") // Brug userid, hvis det er en kolonne
+                            rs.getInt("userid"),
+                            // Brug userid, hvis det er en kolonne
+                            rs.getBoolean("IsCompleted")
                     );
                 } else {
                     // Returnér null, hvis ingen rækker blev fundet

@@ -177,4 +177,41 @@ public class SubTaskRepository {
 
         return userId;
     }
+    public boolean areAllSubtasksCompleted(int projectId) {
+            // SQL-forespørgsel for at hente "is_completed" for alle opgaver i delprojektet
+            String query = "SELECT IsCompleted FROM subtasks WHERE subtaskid = ?";
+            try (PreparedStatement ps = con.prepareStatement(query)) {
+                ps.setInt(1, projectId);
+                ResultSet rs = ps.executeQuery();
+
+                // Læs alle opgaver
+                while (rs.next()) {
+                    boolean isCompleted = rs.getBoolean("IsCompleted");
+
+                    // Hvis én opgave ikke er færdig, returner false
+                    if (!isCompleted) {
+                        return false;
+                    }
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            // Hvis vi når hertil, betyder det, at alle opgaver er færdige
+            return true;
+        }
+    public void updateProjectStatusIfAllSubtasksCompleted(int projectId) {
+        if (areAllSubtasksCompleted(projectId)) {
+            String query = "UPDATE projects SET Description = 'Alle del projekter færdig', IsCompleted = ? WHERE projectid = ?";
+
+            try (PreparedStatement ps = con.prepareStatement(query)) {
+                ps.setBoolean(1, areAllSubtasksCompleted(projectId));
+                ps.setInt(2, projectId);
+                ps.executeUpdate();
+                System.out.println("Project " + projectId + " marked as completed.");
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }

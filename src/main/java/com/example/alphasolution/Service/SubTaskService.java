@@ -37,4 +37,7 @@ public class SubTaskService {
    public int getUseridByProjectId(int projectid) {
         return subTaskRepository.getUserIdbyProjectId(projectid);
    }
+   public void updateProjectIscomplete(int projectid) {
+        subTaskRepository.updateProjectStatusIfAllSubtasksCompleted(projectid);
+   }
 }

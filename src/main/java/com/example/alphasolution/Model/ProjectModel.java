@@ -5,14 +5,16 @@ public class ProjectModel {
     private String projectName;
     private String description;
     private int totalHours;
+    private boolean iscompleted;
 
     public ProjectModel() {}
 
-    public ProjectModel(int projectId, String projectName, String description, int totalHours) {
+    public ProjectModel(int projectId, String projectName, String description, int totalHours, boolean iscompleted) {
         this.projectId = projectId;
         this.projectName = projectName;
         this.description = description;
         this.totalHours = totalHours;
+        this.iscompleted = iscompleted;
     }
 
     public String getProjectName() {
@@ -44,5 +46,11 @@ public class ProjectModel {
     }
     public void setProjectId(int projectId) {
         this.projectId = projectId;
+    }
+    public boolean isCompleted() {
+        return iscompleted;
+    }
+    public void setCompleted(boolean iscompleted) {
+        this.iscompleted = iscompleted;
     }
 }

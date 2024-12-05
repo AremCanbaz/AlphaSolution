@@ -27,6 +27,7 @@ public class TaskController {
         ArrayList<TaskModel> tasks = taskService.getTasks(subtaskid);
         String subtaskName = subTaskService.getSubtaskName(subtaskid);
         subTaskService.getTotalHoursForSubTask(subtaskid);
+        taskService.updateSubTaskToTrueIfAllTaskAreDone(subtaskid);
         int projectid = taskService.getProjectIdBySubtaskId(subtaskid);
         model.addAttribute("tasks", tasks);
         model.addAttribute("subtaskid", subtaskid);
