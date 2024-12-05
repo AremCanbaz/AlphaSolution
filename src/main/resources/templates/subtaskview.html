@@ -3,10 +3,23 @@
 <head>
     <title>Subtask</title>
     <meta charset="UTF-8">
-    <title>Title</title>
     <link th:href="@{/subtaskview.css}" rel="stylesheet">
 </head>
 <body>
+<!-- Log ud knap-->
+<div class="logout-container">
+    <form th:action="@{/logout}" method="post">
+        <button type="submit" class="btn-logout">Log ud</button>
+    </form>
+</div>
+<!-- Tilbage knap-->
+<div class="tilbage-container">
+    <form th:action="@{/dashboard}" method="get">
+        <input type="hidden" name="userId" th:value="${userId}">
+        <button type="submit" class="btn-tilbage">Tilbage</button>
+    </form>
+</div>
+
 <div class="container">
     <h1>Velkommen til Projekt siden</h1>
     <p>Projekt id: <span th:text="${projectid}"></span> </p>
@@ -14,8 +27,8 @@
 
     <div class="create-project">
         <form th:action="@{/createSubTaskView}" method="get">
-            <button class="btn-create"> Opret Subtask</button>
-                <input type="hidden" name="projectid" th:value="${projectid}">
+            <button class="btn-create">Opret Subtask</button>
+            <input type="hidden" name="projectid" th:value="${projectid}">
         </form>
     </div>
 
@@ -25,7 +38,7 @@
         <tr>
             <th>Underopgave navn</th>
             <th>Underopgavens beskrivelse</th>
-            <th>Underopgave tids estimat </th>
+            <th>Underopgave tids estimat</th>
             <th>Underopgavens status</th>
             <th>Slet Subtask</th>
             <th>Edit projekt</th>
@@ -34,41 +47,35 @@
         <tbody>
         <tr th:each="subtask : ${subtasks}">
             <td>
-                <a th:href="@{/taskview(subtaskid=${subtask.subTaskId})}"
-                   class="project-link"
-                   th:text="${subtask.subTaskName}">
-                    Underopgave navn
-                </a>
+                <a th:href="@{/taskview(subtaskid=${subtask.subTaskId})}" class="project-link"
+                   th:text="${subtask.subTaskName}">Underopgave navn</a>
             </td>
             <td th:text="${subtask.subTaskDescription}">Beskrivelse</td>
             <td th:text="${subtask.subTaskTime}">Antal timer</td>
             <td th:classappend="${subtask.subTaskStatus ? 'text-success' : 'text-danger'}"
-                th:text="${subtask.subTaskStatus ? 'Fuldført' : 'I gang'}">
-            </td>
+                th:text="${subtask.subTaskStatus ? 'Fuldført' : 'I gang'}"></td>
             <td>
-                <!-- Slet Button -->
-                <form action="/deleteSubTask" method="post">
-                    <input type="hidden" name="subtaskId" th:value="${subtask.subTaskId}" />
-                    <input type="hidden" name="projectid" th:value="${projectid}" />
-                    <button type="submit" class="btn-delete">Delete</button>
-                </form>
-
-            </td>
-            <td>
+                <!-- Ændre knappen-->
                 <form action="/editsubtask" method="get">
                     <input type="hidden" name="subtaskid" th:value="${subtask.subTaskId}" />
                     <input type="hidden" name="projectid" th:value="${projectid}" />
                     <button type="submit" class="btn-edit">Edit</button>
                 </form>
             </td>
+            <td>
+                <!-- Slet knap -->
+                <form action="/deleteSubTask" method="post">
+                    <input type="hidden" name="subtaskId" th:value="${subtask.subTaskId}" />
+                    <input type="hidden" name="projectid" th:value="${projectid}" />
+                    <button type="submit" class="btn-delete">Delete</button>
+                </form>
+            </td>
         </tr>
         <tr th:if="${#lists.isEmpty(subtasks)}">
             <td colspan="5" class="no-projects">Ingen underopgaver her, opret en nu for at komme igang</td>
-
         </tr>
         </tbody>
     </table>
 </div>
-
 </body>
 </html>

@@ -53,4 +53,8 @@ public class UserController {
             return "createUser";
         }
     }
+    @PostMapping("logout")
+    public String processLogout() {
+        return "login";
+    }
 }

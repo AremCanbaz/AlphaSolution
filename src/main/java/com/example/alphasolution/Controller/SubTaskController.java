@@ -24,10 +24,12 @@ public class SubTaskController {
     public String subtaskview(@RequestParam int projectid, Model model) {
         ArrayList<SubTaskModel> subtasks = subTaskService.getAllSubTasks(projectid);
         projectService.getTotalHours(projectid);
+        int userId = subTaskService.getUseridByProjectId(projectid);
         String projectName = projectService.getProjectName(projectid);
         model.addAttribute("subtasks", subtasks);
         model.addAttribute("projectid", projectid);
         model.addAttribute("projectname", projectName);
+        model.addAttribute("userId", userId);
         return "subtaskview";
     }
 

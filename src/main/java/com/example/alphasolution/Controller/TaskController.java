@@ -27,9 +27,11 @@ public class TaskController {
         ArrayList<TaskModel> tasks = taskService.getTasks(subtaskid);
         String subtaskName = subTaskService.getSubtaskName(subtaskid);
         subTaskService.getTotalHoursForSubTask(subtaskid);
+        int projectid = taskService.getProjectIdBySubtaskId(subtaskid);
         model.addAttribute("tasks", tasks);
         model.addAttribute("subtaskid", subtaskid);
         model.addAttribute("subtaskname", subtaskName);
+        model.addAttribute("projectid", projectid);
         return "taskview";
     }
     @GetMapping("/opretopgaveview")

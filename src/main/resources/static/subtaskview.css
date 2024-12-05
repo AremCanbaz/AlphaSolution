@@ -6,7 +6,7 @@ body {
     color: #e0e0e0; /* Lys tekst */
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     padding: 20px;
     box-sizing: border-box;
     min-height: 100vh;
@@ -151,4 +151,36 @@ button {
         font-size: 12px;
         padding: 6px 10px;
     }
+}
+
+/* Log ud knappen */
+.logout-container {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+.btn-logout {
+    background-color: #e53935; /* Rød farve */
+    color: #ffffff; /* Hvid tekst */
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s;
+}
+
+.btn-logout:hover {
+    background-color: #d32f2f; /* Mørkere rød på hover */
+    transform: scale(1.05);
+}
+
+/* Farver for status */
+.text-success {
+    color: #4caf50; /* Grøn farve for Fuldført */
+}
+
+.text-danger {
+    color: #e53935; /* Rød farve for I gang */
 }

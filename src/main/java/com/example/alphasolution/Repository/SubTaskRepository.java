@@ -116,6 +116,7 @@ public class SubTaskRepository {
             e.printStackTrace();
         }
     }
+
     public void editSubtask(int subtaskid, String subtaskName, String description) {
         try {
 
@@ -131,7 +132,7 @@ public class SubTaskRepository {
         }
     }
 
-    public SubTaskModel findSubTaskBySubTaskId(int subtaskid){
+    public SubTaskModel findSubTaskBySubTaskId(int subtaskid) {
         String query = "SELECT * FROM subtasks WHERE subtaskid = ?";
         try (PreparedStatement preparedStatement = con.prepareStatement(query)) {
             // Sæt parameteren i forespørgslen
@@ -149,8 +150,7 @@ public class SubTaskRepository {
                     // Returnér null, hvis ingen rækker blev fundet
                     return null;
                 }
-            }
-            catch (SQLException e){
+            } catch (SQLException e) {
                 e.printStackTrace();
             }
         } catch (SQLException e) {
@@ -159,4 +159,22 @@ public class SubTaskRepository {
         return null;
     }
 
+    public int getUserIdbyProjectId(int projectid) {
+        String query = "SELECT userid FROM projects WHERE projectid = ?";
+        int userId = 0;
+        try {
+            PreparedStatement preparedStatement = con.prepareStatement(query);
+            preparedStatement.setInt(1, projectid);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            // Flyt cursoren til første række
+            if (resultSet.next()) {
+                userId = resultSet.getInt("userid");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return userId;
+    }
 }

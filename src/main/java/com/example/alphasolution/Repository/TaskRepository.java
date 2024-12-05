@@ -81,7 +81,7 @@ public class TaskRepository {
         try {
             PreparedStatement preparedStatement = con.prepareStatement(query);
             preparedStatement.setInt(1, taskId);
-            preparedStatement.executeQuery();
+            preparedStatement.execute();
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
         }
@@ -111,5 +111,21 @@ public class TaskRepository {
             sqlException.printStackTrace();
         }
         return null;
+    }
+    public int getProjectIdbySubtaskId(int subtaskId) {
+        String query = "select projectid from subtasks where subtaskid = ?";
+        int projectId = 0;
+
+        try {
+            PreparedStatement preparedStatement = con.prepareStatement(query);
+            preparedStatement.setInt(1,subtaskId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                projectId = resultSet.getInt("projectid");
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return projectId;
     }
 }

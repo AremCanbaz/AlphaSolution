@@ -139,6 +139,27 @@ td .btn-edit:hover {
 td .btn-edit:active {
     transform: scale(0.95);
 }
+.logout-container {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+.btn-logout {
+    background-color: #e53935; /* Rød farve */
+    color: #ffffff; /* Hvid tekst */
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s;
+}
+
+.btn-logout:hover {
+    background-color: #d32f2f; /* Mørkere rød på hover */
+    transform: scale(1.05);
+}
 
 /* Responsive design */
 @media (max-width: 768px) {

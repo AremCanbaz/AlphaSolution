@@ -34,4 +34,7 @@ public class SubTaskService {
    public SubTaskModel findSubTaskById(int subtaskId) {
         return subTaskRepository.findSubTaskBySubTaskId(subtaskId);
    }
+   public int getUseridByProjectId(int projectid) {
+        return subTaskRepository.getUserIdbyProjectId(projectid);
+   }
 }

@@ -7,6 +7,18 @@
     <link th:href="@{/taskview.css}" rel="stylesheet">
 </head>
 <body>
+<div class="logout-button">
+    <form th:action="@{/logout}" method="post">
+        <button type="submit" class="btn-logout">Log ud</button>
+    </form>
+</div>
+<div class="tilbage-container">
+    <form th:action="@{/subtaskview}" method="get">
+        <input type="hidden" name="projectid" th:value="${projectid}">
+        <button type="submit" class="btn-tilbage">Tilbage</button>
+    </form>
+</div>
+
 <div class="container">
     <h1>Velkommen til underopgave siden</h1>
     <p>Underopgave id: <span th:text="${subtaskid}"></span> </p>
@@ -26,7 +38,8 @@
             <th>Underopgavens beskrivelse</th>
             <th>Underopgave tids estimat</th>
             <th>Underopgavens status</th>
-            <th>Funktioner</th> <!-- Ny kolonne for funktioner -->
+            <th>Rediger</th>
+            <th>Slet</th><!-- Ny kolonne for funktioner -->
         </tr>
         </thead>
         <tbody>
@@ -36,19 +49,25 @@
             </td>
             <td th:text="${task.description}">Beskrivelse</td>
             <td th:text="${task.hoursspent}">Antal timer</td>
-            <td th:classappend="${task.iscompleted ? 'text-success' : 'text-danger'}"
+            <td th:classappend="${task.iscompleted ? 'status-completed' : 'status-incomplete'}"
                 th:text="${task.iscompleted ? 'Fuldført' : 'I gang'}">
             </td>
             <td>
                 <!-- Edit form -->
-                <form th:action="@{/edittask}" method="get" style="display:inline;">
+                <form th:action="@{/edittask}" method="get" style="display:inline; flex: auto">
                     <input type="hidden" name="taskId" th:value="${task.taskid}">
                     <input type="hidden" name="subtaskid" th:value="${subtaskid}">
                     <button class="btn-edit">Rediger</button>
                 </form>
 
+            </td>
+            <td>
                 <!-- Delete button -->
-                <button onclick="deleteTask(this)" th:attr="data-id=${task.taskid}" class="btn-delete">Slet</button>
+                <form th:action="@{/deletetask}" method="post" style="display:inline; flex: auto">
+                    <input type="hidden" name="taskid" th:value="${task.taskid}">
+                    <input type="hidden" name="subtaskid" th:value="${subtaskid}">
+                    <button class="btn-delete">Slet </button>
+                </form>
             </td>
         </tr>
         </tbody>

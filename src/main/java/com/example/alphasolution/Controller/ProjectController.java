@@ -59,5 +59,10 @@ public class ProjectController {
         projectService.editProject(projectName, description, projectid);
         return "redirect:/dashboard?userId=" + userid;
     }
+    @PostMapping("deleteproject")
+    public String deleteProject(@RequestParam("projectid") int projectid , @RequestParam("userid") int userid) {
+        projectService.deleteProject(projectid);
+        return "redirect:/dashboard?userId=" + userid;
+    }
 
 }
