@@ -43,12 +43,15 @@
             <td th:text="${project.totalHours}">Total Hours</td>
             <!-- Slet Projekt Knap -->
             <td>
+
+                    <button onclick="deleteProject(this)" th:attr="data-id=${project.projectId}" class="btn-delete">Slet</button>
                 <form th:action="@{/editproject}" method="get" style="display:inline;">
                     <input type="hidden" name="projectid" th:value="${project.projectId}" />
                     <input type="hidden" name="userid" th:value="${userId}" />
                     <button class="btn-edit">Rediger</button>
                 </form>
                 <button onclick="deleteProject(this)" th:attr="data-id=${project.projectId}" class="btn-delete">Slet</button>
+
             </td>
         </tr>
         <!-- If no projects, display a message -->

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <link th:href="@{/editsubtask.css}" rel="stylesheet">
+</head>
+<form action="/updateSubTask" method="post">
+  <input type="hidden" name="subTaskId" th:value="${subTask.subTaskId}" />
+  <input type="hidden" name="projectId" th:value="${subTask.projectid}" /> <!-- Match the controller parameter -->
+
+  <div>
+    <label for="name">Underopgave Navn:</label>
+    <input type="text" id="name" name="subTaskName" th:value="${subTask.subTaskName}" required />
+  </div>
+
+  <div>
+    <label for="description">Beskrivelse:</label>
+    <textarea id="description" name="subTaskDescription" rows="4" required th:text="${subTask.subTaskDescription}"></textarea>
+  </div>
+
+  <button type="submit" class="btn-save">Gem</button>
+</form>
+
+
+
+</html>
