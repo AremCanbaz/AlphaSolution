@@ -17,6 +17,12 @@ public class SubTaskModel {
         this.subTaskTime = subTaskTime;
         this.subTaskStatus = subTaskStatus;
     }
+    public SubTaskModel(int subTaskId, String subTaskName, String subTaskDescription, int projectid){
+        this.projectid = projectid;
+        this.subTaskId = subTaskId;
+        this.subTaskName = subTaskName;
+        this.subTaskDescription = subTaskDescription;
+    }
 
     public SubTaskModel(int projectid, String subTaskName, String subtaskdescription) {
         this.projectid = projectid;

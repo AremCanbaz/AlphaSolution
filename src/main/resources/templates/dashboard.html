@@ -48,7 +48,7 @@
                 <form th:action="@{/editproject}" method="get" style="display:inline;">
                     <input type="hidden" name="projectid" th:value="${project.projectId}" />
                     <input type="hidden" name="userid" th:value="${userId}" />
-                    <button class="btn-create">Rediger</button>
+                    <button class="btn-edit">Rediger</button>
                 </form>
                 <button onclick="deleteProject(this)" th:attr="data-id=${project.projectId}" class="btn-delete">Slet</button>
 

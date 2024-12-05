@@ -51,11 +51,11 @@ public class ProjectController {
         return "editproject";
     }
     @PostMapping("/editprojectSucces")
-    public String editProjectSucces(@RequestParam("projectName") String projectName,
+    public String editProjectSucces(@RequestParam("subTaskName") String projectName,
                                     @RequestParam("description") String description,
                                     @RequestParam("projectid") int projectid,
-                                    @RequestParam("userid") int userid,
-                                    Model model) {
+                                    @RequestParam("userid") int userid
+                                    ) {
         projectService.editProject(projectName, description, projectid);
         return "redirect:/dashboard?userId=" + userid;
     }

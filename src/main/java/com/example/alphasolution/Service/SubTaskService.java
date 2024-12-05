@@ -37,5 +37,11 @@ public class SubTaskService {
     public void getTotalHoursForSubTask(int subtaskId) {
         subTaskRepository.getTotalHours(subtaskId);
     }
+    public void editSubTask(int subtaskId, String subtaskName, String subtaskDesc) {
+        subTaskRepository.editSubtask(subtaskId, subtaskName, subtaskDesc);
+    }
+   public SubTaskModel findSubTaskById(int subtaskId) {
+        return subTaskRepository.findSubTaskBySubTaskId(subtaskId);
+   }
 }
 

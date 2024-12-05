@@ -8,9 +8,10 @@ public class TaskModel {
     int taskTime;
     Boolean taskStatus;
 
-    public TaskModel(int taskId, int subTaskId, String taskName, String taskDescription, int taskTime, boolean taskStatus) {
+    public TaskModel(int subTaskId, int taskid, String taskName, String taskDescription, int taskTime, boolean taskStatus) {
         this.subTaskId = subTaskId;
-        this.taskId = taskId;
+        this.taskid = taskid;
+
         this.taskName = taskName;
         this.taskDescription = taskDescription;
         this.taskTime = taskTime;
@@ -22,11 +23,13 @@ public class TaskModel {
     public void setSubTaskId(int subTaskId) {
         this.subTaskId = subTaskId;
     }
-    public int getTaskId() {
-        return taskId;
+
+    public int getTaskid() {
+        return taskid;
     }
-    public void setTaskId(int taskId) {
-        this.taskId = taskId;
+    public void setTaskid(int subTaskid) {
+        this.taskid = taskid;
+
     }
     public String getTaskName() {
         return taskName;
