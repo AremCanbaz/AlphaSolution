@@ -64,10 +64,10 @@ public class SubTaskController {
     public String editProjectSucces(@RequestParam("subTaskName") String subTaskName,
                                     @RequestParam("subTaskDescription") String subTaskDescription,
                                     @RequestParam("subTaskId") int subTaskId,
-                                    @RequestParam("projectId") int projectId
+                                    @RequestParam("projectId") int projectid
     ) {
         subTaskService.editSubTask(subTaskId, subTaskName, subTaskDescription);
-        return "redirect:/subtaskview?projectid=" + projectId;
+        return "redirect:/subtaskview?projectid=" + projectid;
     }
 
 }
