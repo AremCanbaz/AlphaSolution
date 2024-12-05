@@ -5,35 +5,26 @@ import com.example.alphasolution.Repository.SubTaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.ArrayList;
 
 @Service
 public class SubTaskService {
     @Autowired
     SubTaskRepository subTaskRepository;
 
-    public List<SubTaskModel> getAllSubTasks(int projectid) {
-        return subTaskRepository.getSubTasksByProjectId(projectid); // Add a repository method for this
+    public ArrayList<SubTaskModel> getAllSubTasks(int projectid) {
+        return subTaskRepository.getSubTaskesById(projectid);
     }
-
-
     public void deleteSubTask(int subtaskId){
         subTaskRepository.deleteSubTask(subtaskId);
     }
-    public String getSubTaskName(int subtaskId) {
-        return subTaskRepository.getSubTaskNameById(subtaskId);
+    public String getSubtaskName(int subtaskId) {
+        return subTaskRepository.getTaskNameById(subtaskId);
     }
 
     public void createSubTask(int projectid, String subtaskName, String subtaskDesc) {
         subTaskRepository.createSubTask(projectid, subtaskName, subtaskDesc);
     }
-
-    public void updateSubTask(int subTaskId, String subTaskName, String subTaskDescription) {
-        subTaskRepository.updateSubTask(subTaskId, subTaskName, subTaskDescription);
-    }
-
-
-
     public void getTotalHoursForSubTask(int subtaskId) {
         subTaskRepository.getTotalHours(subtaskId);
     }
@@ -44,4 +35,3 @@ public class SubTaskService {
         return subTaskRepository.findSubTaskBySubTaskId(subtaskId);
    }
 }
-
