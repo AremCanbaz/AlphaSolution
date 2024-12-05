@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Project</title>
+</head>
+<body>
+<h1>Edit Project</h1>
+
+<form th:action="@{/editprojectSucces}" method="post">
+    <!-- Skjulte felter for projectid og userid -->
+    <input type="hidden" name="projectid" th:value="${project.projectId}" />
+    <input type="hidden" name="userid" th:value="${userId}" />
+
+    <!-- Projektets navn -->
+    <label for="projectName">Project Name:</label>
+    <input type="text" id="projectName" name="projectName" th:value="${project.projectName}" required />
+    <br><br>
+
+    <!-- Projektets beskrivelse -->
+    <label for="description">Description:</label>
+    <textarea id="description" name="description" th:text="${project.description}" required></textarea>
+    <br><br>
+
+    <!-- Gem ændringer -->
+    <button type="submit">Save Changes</button>
+</form>
+
+<br>
+<a th:href="@{/dashboard(userId=${userId})}">Back to Dashboard</a>
+</body>
+</html>

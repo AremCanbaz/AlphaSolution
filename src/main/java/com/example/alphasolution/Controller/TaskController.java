@@ -11,7 +11,6 @@
     import org.springframework.web.bind.annotation.GetMapping;
     import org.springframework.web.bind.annotation.PostMapping;
     import org.springframework.web.bind.annotation.RequestParam;
-
     import java.util.ArrayList;
 
     @Controller
@@ -22,24 +21,33 @@
         ProjectService projectService;
         @Autowired
         TaskService taskService;
-        @Autowired
-        private SubTaskRepository subTaskRepository;
+      
+    @GetMapping("/taskview")
+    public String subtaskview(@RequestParam int subtaskid, Model model) {
+        ArrayList<TaskModel> tasks = taskService.getTasks(subtaskid);
+        String subtaskName = subTaskService.getSubtaskName(subtaskid);
+        subTaskService.getTotalHoursForSubTask(subtaskid);
+        model.addAttribute("tasks", tasks);
+        model.addAttribute("subtaskid", subtaskid);
+        model.addAttribute("subtaskname", subtaskName);
+        return "taskview";
+    }
+    @GetMapping("/opretopgaveview")
+    public String opretopgaveview(@RequestParam int subtaskid, Model model) {
+        model.addAttribute("subtaskid", subtaskid);
+        return "createtask";
 
-        @GetMapping("/taskview")
-        public String taskview(@RequestParam int subTaskId, Model model) {
-            ArrayList<TaskModel> tasks = taskService.getTasks(subTaskId);
-            String subTaskName = subTaskService.getSubTaskName(subTaskId);
-            model.addAttribute("tasks", tasks);
-            model.addAttribute("subtaskid", subTaskId);
-            model.addAttribute("subtaskname", subTaskName);
-            return "taskview";
-        }
-        @PostMapping("/deleteTask")
+    }
+    @PostMapping("/opretopgaveaction")
+    public String opretopgave(@RequestParam int subtaskid, @RequestParam String taskname, @RequestParam String taskdescription, @RequestParam int time) {
+        taskService.createtask(subtaskid, taskname, taskdescription, time);
+        return "redirect:/taskview?subtaskid=" + subtaskid;
+
+    }
+     @PostMapping("/deleteTask")
         public String deleteTask(@RequestParam("taskId") int taskId, @RequestParam("subTaskId") int subTaskId) {
             taskService.deleteTask(taskId);
             return "redirect:/taskview?subTaskId=" + subTaskId; // Redirect tilbage til samme side
         }
+}
 
-
-
-    }

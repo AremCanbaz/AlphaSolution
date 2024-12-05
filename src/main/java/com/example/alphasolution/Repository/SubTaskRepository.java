@@ -2,7 +2,6 @@ package com.example.alphasolution.Repository;
 
 import com.example.alphasolution.Model.SubTaskModel;
 import org.springframework.stereotype.Repository;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,8 +12,9 @@ import static com.example.alphasolution.Repository.DbManager.connection;
 public class SubTaskRepository {
     Connection con = DbManager.getConnection();
 
-    public SubTaskModel getSubTaskById(int subTaskId) {
-        SubTaskModel subTask = null;
+    public ArrayList<SubTaskModel> getSubTaskesById(
+            int projectid) {
+        ArrayList<SubTaskModel> subTasks = new ArrayList<>();
 
         try {
             String query = "SELECT * FROM subtasks WHERE subtaskid = ?";
@@ -61,12 +61,12 @@ public class SubTaskRepository {
                 }
 
             }
-        }
-        catch (SQLException sqlException) {
+        } catch (SQLException sqlException) {
             sqlException.printStackTrace();
         }
         return null;
     }
+
     public void createSubTask(int projectid, String subtaskdescription, String subtaskname) {
         String query1 = "INSERT INTO subtasks (projectid, subtaskname, SubtaskDescription) VALUES (?,?,?)";
         try {
@@ -89,9 +89,59 @@ public class SubTaskRepository {
             e.printStackTrace();
         }
     }
+            PreparedStatement preparedStatement = con.prepareStatement(query1);
+            preparedStatement.setInt(1, projectid);
+            preparedStatement.setString(2, subtaskdescription);
+            preparedStatement.setString(3, subtaskname);
+            preparedStatement.executeUpdate();
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+        }
+    }
+
+    public void getTotalHours(int subtaskId) {
+        String query = "SELECT SUM(hoursspent) AS total_hours FROM tasks WHERE subtaskid = ?";
+        int totalHours = 0;
+
+        // Beregn total_hours fra tasks-tabellen
+        try {
+            PreparedStatement preparedStatement = con.prepareStatement(query);
+            preparedStatement.setInt(1, subtaskId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                totalHours = resultSet.getInt("total_hours");
+            }
+            resultSet.close();
+            preparedStatement.close();
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+        }
+
+        // Opdater total_hours i subtasks-tabellen
+        try {
+            String query2 = "UPDATE subtasks SET totalhours = ? WHERE subtaskid = ?";
+            PreparedStatement updateStatement = con.prepareStatement(query2);
+            updateStatement.setInt(1, totalHours);
+            updateStatement.setInt(2, subtaskId);
+
+            int rowsUpdated = updateStatement.executeUpdate(); // Udfør opdatering
+            if (rowsUpdated > 0) {
+                System.out.println("Total hours updated successfully.");
+            } else {
+                System.out.println("No rows were updated.");
+            }
+
+            updateStatement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public List<SubTaskModel> getSubTasksByProjectId(int projectid) {
         List<SubTaskModel> subTasks = new ArrayList<>();
         try {
+
             String query = "SELECT * FROM subtasks WHERE projectid = ?";
             PreparedStatement stmt = connection.prepareStatement(query);
             stmt.setInt(1, projectid);
@@ -112,6 +162,4 @@ public class SubTaskRepository {
         }
         return subTasks;
     }
-
-
 }

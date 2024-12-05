@@ -76,9 +76,90 @@ public class ProjectRepository {
                 }
 
             }
-        }
-        catch (SQLException sqlException) {
+        } catch (SQLException sqlException) {
             sqlException.printStackTrace();
+        }
+        return null;
+    }
+
+    public void getTotalHours(int projectId) {
+        String query = "SELECT SUM(totalhours) AS total_hours FROM subtasks WHERE projectid = ?";
+        int totalHours = 0;
+
+        // Beregn total_hours fra tasks-tabellen
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, projectId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                totalHours = resultSet.getInt("total_hours");
+            }
+            resultSet.close();
+            preparedStatement.close();
+        } catch (SQLException sqlException) {
+            sqlException.printStackTrace();
+        }
+
+        // Opdater total_hours i subtasks-tabellen
+        try {
+            String query2 = "UPDATE projects SET totalhours = ? WHERE projectid = ?";
+            PreparedStatement updateStatement = connection.prepareStatement(query2);
+            updateStatement.setInt(1, totalHours);
+            updateStatement.setInt(2, projectId);
+
+            int rowsUpdated = updateStatement.executeUpdate(); // Udfør opdatering
+            if (rowsUpdated > 0) {
+                System.out.println("Total hours updated successfully.");
+            } else {
+                System.out.println("No rows were updated.");
+            }
+
+            updateStatement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void editProject(int projectId, String projectname, String description) {
+        try {
+
+
+            String query = "UPDATE projects SET projectname = ?, description = ? WHERE projectid = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, projectname);
+            preparedStatement.setString(2, description);
+            preparedStatement.setInt(3, projectId);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public ProjectModel findById(int projectid){
+        String query = "SELECT * FROM projects WHERE projectid = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            // Sæt parameteren i forespørgslen
+            preparedStatement.setInt(1, projectid);
+            try (ResultSet rs = preparedStatement.executeQuery()) {
+                // Hvis et resultat findes, opret og returner modellen
+                if (rs.next()) {
+                    return new ProjectModel(
+                            rs.getInt("projectid"),
+                            rs.getString("projectname"),
+                            rs.getString("description"),
+                            rs.getInt("userid") // Brug userid, hvis det er en kolonne
+                    );
+                } else {
+                    // Returnér null, hvis ingen rækker blev fundet
+                    return null;
+                }
+            }
+            catch (SQLException e){
+                e.printStackTrace();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
         return null;
     }

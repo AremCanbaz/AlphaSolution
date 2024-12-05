@@ -25,28 +25,34 @@ public class SubTaskController {
 
     @GetMapping("/subtaskview")
     public String subtaskview(@RequestParam int projectid, Model model) {
-        List<SubTaskModel>  subtasks = subTaskService.getAllSubTasks(projectid);
+        ArrayList<SubTaskModel> subtasks = subTaskService.getAllSubTasks(projectid);
+        projectService.getTotalHours(projectid);
         String projectName = projectService.getProjectName(projectid);
         model.addAttribute("subtasks", subtasks);
         model.addAttribute("projectid", projectid);
         model.addAttribute("projectname", projectName);
         return "subtaskview";
     }
+
     @PostMapping("/deleteSubTask")
-    public String deleteSubTask(@RequestParam("subtaskId") int subTaskId,@RequestParam("projectid") int projectId){
+    public String deleteSubTask(@RequestParam("subtaskId") int subTaskId, @RequestParam("projectid") int projectId) {
         subTaskService.deleteSubTask(subTaskId);
         return "redirect:/subtaskview?projectid=" + projectId; // Redirect tilbage til samme side
     }
-       @GetMapping("/createSubTaskView")
+
+    @GetMapping("/createSubTaskView")
     public String createsubtaskview(@RequestParam int projectid, Model model) {
         model.addAttribute("projectid", projectid);
         return "createsubtask";
 
     }
+
     @PostMapping("/createsubtaskaction")
-    public String createsubtask(@RequestParam int projectid, @RequestParam String subtaskname,@RequestParam String subtaskdescription) {
-        subTaskService.createSubTask(projectid,subtaskname,subtaskdescription);
+    public String createsubtask(@RequestParam int projectid, @RequestParam String subtaskname, @RequestParam String subtaskdescription) {
+        subTaskService.createSubTask(projectid, subtaskname, subtaskdescription);
         return "redirect:/subtaskview?projectid=" + projectid;
+
+    }
 
 }
     @GetMapping("/editsubtask")

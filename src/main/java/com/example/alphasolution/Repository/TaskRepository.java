@@ -41,6 +41,7 @@ public class TaskRepository {
         }
         return tasks;
     }
+
     public void deleteTask(int taskId) {
         String deleteQuery = "DELETE FROM tasks WHERE taskid = ?";
         try {
@@ -50,7 +51,7 @@ public class TaskRepository {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-}
+      
     public String getTaskNameById(int taskId) {
         String query = "SELECT taskname FROM tasks WHERE taskid = ?";
         try {
@@ -67,5 +68,17 @@ public class TaskRepository {
             sqlException.printStackTrace();
         }
         return null;
+    public void createTask(int subtaskid, String taskdescription, String taskname, int time) {
+        String query1 = "INSERT INTO tasks (subtaskid, taskname, description, hoursspent) VALUES (?,?,?,?)";
+        try {
+            PreparedStatement preparedStatement = con.prepareStatement(query1);
+            preparedStatement.setInt(1, subtaskid);
+            preparedStatement.setString(2, taskname);
+            preparedStatement.setString(3, taskdescription);
+            preparedStatement.setInt(4, time);
+            preparedStatement.executeUpdate();
+        }  catch (SQLException sqlException) {
+            sqlException.printStackTrace();}
+
     }
 }
