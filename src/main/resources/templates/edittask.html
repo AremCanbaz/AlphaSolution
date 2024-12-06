@@ -29,6 +29,7 @@
     <!-- Opgave status -->
     <label for="iscompleted">Opgavens status:</label>
     <input type="checkbox" id="iscompleted" name="iscompleted" value="true" th:checked="${taskmodel.iscompleted}" />
+    <input type="hidden" name="_iscompleted" value="off" />
 
     <!-- Gem ændringer -->
     <input type="hidden" name="subtaskid" th:value="${subtaskid}" />

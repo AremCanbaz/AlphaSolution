@@ -70,7 +70,7 @@ public class TaskController {
             @RequestParam String taskname,
             @RequestParam String description,
             @RequestParam int hoursspent,
-            @RequestParam boolean iscompleted,
+            @RequestParam(defaultValue = "false") boolean iscompleted,
             @RequestParam int subtaskid) {
 
         // Debugging logs

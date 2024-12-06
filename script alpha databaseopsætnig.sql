@@ -14,6 +14,7 @@ create table projects (
     ProjectName varchar(255) not null,       -- navn på projektet
     Description text,                        -- beskrivelse af projektet
     TotalHours int default 0,      -- samlede timer for projektet
+    IsCompleted oolean default false,
     Foreign key (userid) references users(userid)
 );
 create table subtasks (

@@ -1,6 +1,6 @@
 package com.example.alphasolution.Repository;
 
-import com.example.alphasolution.Model.SubTaskModel;
+
 import com.example.alphasolution.Model.TaskModel;
 import org.springframework.stereotype.Repository;
 
@@ -19,7 +19,7 @@ public class TaskRepository {
         ArrayList<TaskModel> tasks = new ArrayList<>();
 
         try {
-            String query = "select * from tasks where subtaskid = ?";
+            String query = "SELECT * FROM tasks WHERE subtaskid = ?";
             PreparedStatement stmt = con.prepareStatement(query);
             stmt.setInt(1, subTaskId);
             ResultSet rs = stmt.executeQuery();
@@ -36,6 +36,7 @@ public class TaskRepository {
             }
         }catch (SQLException e) {
             e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return tasks;
     }
