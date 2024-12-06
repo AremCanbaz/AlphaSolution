@@ -37,6 +37,11 @@
 </form>
 
 <br>
-<a th:href="@{/taskview(subtaskid=${subtaskid})}">Tilbage til opgaver</a>
+<div class="tilbage-container2">
+    <form th:action="@{/taskview(subtaskid=${subtaskid})}" method="get">
+        <input type="hidden" name="subtaskid" th:value="${subtaskid}">
+        <button type="submit" class="btn-tilbage2">Tilbage til opgaver</button>
+    </form>
+</div>
 </body>
 </html>

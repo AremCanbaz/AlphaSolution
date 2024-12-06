@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Subtask</title>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
     <link rel="stylesheet" th:href="@{/createproject.css}">
 </head>
 <body class="body-tabel">
@@ -19,7 +20,7 @@
     </form>
 </div>
 
-<div class="project-container">
+<div class="container">
     <h1>Velkommen til opgave siden</h1>
     <p>Delprojekt id: <span th:text="${subtaskid}"></span> </p>
     <p>Delprojekt navn: <span th:text="${subtaskname}"></span> </p>
@@ -45,7 +46,7 @@
         <tbody>
         <tr th:each="task : ${tasks}">
             <td>
-                <a th:text="${task.taskName}">Opgave navn</a>
+                <a th:text="${task.taskName}" style="color: #4caf50">Opgave navn</a>
             </td>
             <td th:text="${task.description}">Beskrivelse</td>
             <td th:text="${task.hoursspent}">Antal timer</td>
@@ -57,7 +58,7 @@
                 <form th:action="@{/edittask}" method="get" style="display:inline; flex: auto">
                     <input type="hidden" name="taskId" th:value="${task.taskid}">
                     <input type="hidden" name="subtaskid" th:value="${subtaskid}">
-                    <button class="btn-edit">Rediger</button>
+                    <button class="btn-edit">Rediger <i class="fas fa-edit"></i></button>
                 </form>
 
             </td>
@@ -66,7 +67,7 @@
                 <form th:action="@{/deletetask}" method="post" style="display:inline; flex: auto">
                     <input type="hidden" name="taskid" th:value="${task.taskid}">
                     <input type="hidden" name="subtaskid" th:value="${subtaskid}">
-                    <button class="btn-delete">Slet </button>
+                    <button class="btn-delete" type="submit">Slet <i class="fas fa-trash"></i></button>
                 </form>
             </td>
         </tr>

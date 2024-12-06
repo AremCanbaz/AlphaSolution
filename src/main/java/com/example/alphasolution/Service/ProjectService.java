@@ -18,6 +18,18 @@ public ArrayList<ProjectModel> projectList(int userId){
 public void createProject(String projectName, String description, int userId){
     projectRepository.createProject(projectName, description, userId);
 }
+
+// Metode til søgefunktion
+    public ProjectModel getProjectByName(String projectName, ArrayList<ProjectModel> projects) {
+
+
+        for (ProjectModel project : projects) {
+            if (project.getProjectName().equalsIgnoreCase(projectName)) {
+                return project;
+            }
+        }
+        return null;
+    }
 public void deleteProject(int projectId){
     projectRepository.deleteProject(projectId);
 }

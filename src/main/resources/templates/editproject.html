@@ -28,6 +28,11 @@
 </form>
 
 <br>
-<a th:href="@{/dashboard(userId=${userId})}">Tilbage til dashboardet</a>
+<div class="tilbage-container2">
+    <form th:action="@{/dashboard(userId=${userId})}" method="get">
+        <input type="hidden" name="userId" th:value="${userId}">
+        <button type="submit" class="btn-tilbage2">Tilbage til Dashboard</button>
+    </form>
+</div>
 </body>
 </html>

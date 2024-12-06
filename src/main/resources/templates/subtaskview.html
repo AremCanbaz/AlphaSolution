@@ -3,6 +3,7 @@
 <head>
     <title>Subtask</title>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
     <link rel="stylesheet" th:href="@{/createproject.css}">
 </head>
 <body class="body-tabel">
@@ -20,7 +21,7 @@
     </form>
 </div>
 
-<div class="project-container">
+<div class="container">
     <h1>Velkommen til dine delprojekter</h1>
     <p>Projekt id: <span th:text="${projectid}"></span> </p>
     <p>Projekt navn: <span th:text="${projectname}"></span> </p>
@@ -59,7 +60,7 @@
                 <form action="/editsubtask" method="get">
                     <input type="hidden" name="subtaskid" th:value="${subtask.subTaskId}" />
                     <input type="hidden" name="projectid" th:value="${projectid}" />
-                    <button type="submit" class="btn-edit">Rediger</button>
+                    <button class="btn-edit">Rediger  <i class="fas fa-edit"></i></button>
                 </form>
             </td>
             <td>
@@ -67,7 +68,7 @@
                 <form action="/deleteSubTask" method="post">
                     <input type="hidden" name="subtaskId" th:value="${subtask.subTaskId}" />
                     <input type="hidden" name="projectid" th:value="${projectid}" />
-                    <button type="submit" class="btn-delete">Slet</button>
+                    <button class="btn-delete" type="submit">Slet <i class="fas fa-trash"></i></button>
                 </form>
             </td>
         </tr>

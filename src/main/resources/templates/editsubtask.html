@@ -21,6 +21,11 @@
   <button type="submit" class="btn-save">Gem ændringer</button>
 </form>
 
-<a th:href="@{/subtaskview(projectid=${projectid})}">Tilbage til delprojekter</a>
+<div class="tilbage-container2">
+  <form th:action="@{/subtaskview}" method="get">
+    <input type="hidden" name="projectid" th:value="${projectid}">
+    <button type="submit" class="btn-tilbage2">Tilbage til Projekter</button>
+  </form>
+</div>
 </body>
 </html>

@@ -18,6 +18,7 @@ public class ProjectController {
     @Autowired
     private UserService userService;
 
+
     @GetMapping("/dashboard")
     public String showDashboard(@RequestParam("userId") int userId, Model model) {
         ArrayList<ProjectModel> projects = projectService.projectList(userId);
@@ -63,5 +64,25 @@ public class ProjectController {
         projectService.deleteProject(projectid);
         return "redirect:/dashboard?userId=" + userid;
     }
+
+    // søge funktion til projekter
+    @PostMapping("searchproject")
+    public String searchProject(@RequestParam String projectName, @RequestParam int userId, Model model) {
+        ArrayList<ProjectModel> userProjects = projectService.projectList(userId);
+
+
+        ProjectModel project = projectService.getProjectByName(projectName, userProjects);
+
+        if (project != null) {
+            return "redirect:/subtaskview?projectid=" + project.getProjectId();
+        } else {
+            model.addAttribute("Fejl", "Ingen projekter fundet med navnet: " + projectName);
+        }
+
+
+        return "dashboard";
+    }
+
+
 
 }

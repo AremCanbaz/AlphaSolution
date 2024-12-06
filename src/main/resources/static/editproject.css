@@ -96,26 +96,24 @@ a:hover {
 }
 .tilbage-container2 {
     position: absolute;
-    top: 20px;
-    left: 20px;
+    top: 12px;
+    left: 12px;
 }
 
 .btn-tilbage2 {
     background-color: lightgrey;
     color: black;
-    padding: 12px 12px;
+    padding: 8px 8px;
     border: none;
     border-radius: 4px;
-    font-size: 16px;
-    text-decoration: none; /* Removes underline from the link */
-    display: inline-block; /* Makes the link behave like a button */
+    font-size: 12px;
     transition: background-color 0.3s ease, transform 0.2s;
 }
 
 .btn-tilbage2:hover {
     background-color: dimgrey;
     transform: scale(1.05);
-    color: white; /* Optional: Makes text color white on hover for contrast */
+
 }
 
 
