@@ -20,9 +20,9 @@
 </div>
 
 <div class="project-container">
-    <h1>Velkommen til underopgave siden</h1>
-    <p>Underopgave id: <span th:text="${subtaskid}"></span> </p>
-    <p>Underopgave navn: <span th:text="${subtaskname}"></span> </p>
+    <h1>Velkommen til opgave siden</h1>
+    <p>Delprojekt id: <span th:text="${subtaskid}"></span> </p>
+    <p>Delprojekt navn: <span th:text="${subtaskname}"></span> </p>
     <div class="create-project">
         <form th:action="@{/opretopgaveview}" method="get">
             <button class="btn-create"> Opret Opgave</button>
@@ -30,11 +30,11 @@
         </form>
     </div>
 
-    <h2>Dine underopgaver</h2>
+    <h2>Dine opgaver</h2>
     <table>
         <thead>
         <tr>
-            <th>Opgave navn</th>
+            <th>Opgavens navn</th>
             <th>Opgavens beskrivelse</th>
             <th>Opgavens tids estimat</th>
             <th>Opgavens status</th>
