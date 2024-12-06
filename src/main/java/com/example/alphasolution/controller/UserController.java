@@ -1,6 +1,6 @@
-package com.example.alphasolution.Controller;
+package com.example.alphasolution.controller;
 
-import com.example.alphasolution.Model.UserModel;
+import com.example.alphasolution.model.UserModel;
 import com.example.alphasolution.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

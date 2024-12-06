@@ -1,6 +1,6 @@
-package com.example.alphasolution.Controller;
+package com.example.alphasolution.controller;
 
-import com.example.alphasolution.Model.SubTaskModel;
+import com.example.alphasolution.model.SubTaskModel;
 import com.example.alphasolution.Service.ProjectService;
 import com.example.alphasolution.Service.SubTaskService;
 import org.springframework.beans.factory.annotation.Autowired;

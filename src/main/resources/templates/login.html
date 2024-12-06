@@ -7,10 +7,9 @@
   <title>Alpha Solution Login</title>
 </head>
 <body>
+<!-- Login-formular -->
 <form th:action="@{/loginSucces}" method="post">
-
   <h1>Login her!</h1>
-
   <div>
     <label for="brugernavn">Brugernavn</label>
     <input type="text" id="brugernavn" name="username" required>
@@ -22,14 +21,14 @@
 
     <button type="submit">Log ind</button>
   </div>
-
-  <div>
-    <h2>Har du ikke en bruger?</h2>
-    <form th:action="@{/creatusersite}" method="get">
-    <button type="button">Opret bruger</button>
-      </form>
-  </div>
-
 </form>
+
+<!-- Sektion til oprettelse af ny bruger -->
+<div>
+  <h2>Har du ikke en bruger?</h2>
+  <form th:action="@{/createusersite}" method="get">
+    <button type="submit">Opret bruger</button>
+  </form>
+</div>
 </body>
 </html>

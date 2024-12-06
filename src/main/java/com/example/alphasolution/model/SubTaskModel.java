@@ -1,4 +1,4 @@
-package com.example.alphasolution.Model;
+package com.example.alphasolution.model;
 
 public class SubTaskModel {
     private int projectid;

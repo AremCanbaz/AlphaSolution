@@ -1,11 +1,10 @@
 package com.example.alphasolution.Service;
 
-import com.example.alphasolution.Model.ProjectModel;
+import com.example.alphasolution.model.ProjectModel;
 import com.example.alphasolution.Repository.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 @Service
 

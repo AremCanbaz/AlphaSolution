@@ -1,7 +1,7 @@
 package com.example.alphasolution.Repository;
 
 
-import com.example.alphasolution.Model.UserModel;
+import com.example.alphasolution.model.UserModel;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;

@@ -1,7 +1,6 @@
 package com.example.alphasolution.Repository;
 
-import com.example.alphasolution.Model.ProjectModel;
-import com.example.alphasolution.Model.SubTaskModel;
+import com.example.alphasolution.model.SubTaskModel;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;

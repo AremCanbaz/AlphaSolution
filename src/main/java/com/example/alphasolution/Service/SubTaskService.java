@@ -1,6 +1,6 @@
 package com.example.alphasolution.Service;
 
-import com.example.alphasolution.Model.SubTaskModel;
+import com.example.alphasolution.model.SubTaskModel;
 import com.example.alphasolution.Repository.SubTaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

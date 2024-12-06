@@ -1,10 +1,9 @@
-package com.example.alphasolution.Controller;
+package com.example.alphasolution.controller;
 
-import com.example.alphasolution.Model.ProjectModel;
+import com.example.alphasolution.model.ProjectModel;
 import com.example.alphasolution.Service.ProjectService;
 import com.example.alphasolution.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -51,7 +50,7 @@ public class ProjectController {
         return "editproject";
     }
     @PostMapping("/editprojectSucces")
-    public String editProjectSucces(@RequestParam("subTaskName") String projectName,
+    public String editProjectSucces(@RequestParam("projectName") String projectName,
                                     @RequestParam("description") String description,
                                     @RequestParam("projectid") int projectid,
                                     @RequestParam("userid") int userid

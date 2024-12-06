@@ -1,7 +1,6 @@
 package com.example.alphasolution.Repository;
 
-import com.example.alphasolution.Model.ProjectModel;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.alphasolution.model.ProjectModel;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
@@ -13,7 +12,7 @@ import java.util.ArrayList;
 @Repository
 
 public class ProjectRepository {
-    Connection connection = DbManager.getConnection();
+    private Connection connection = DbManager.getConnection();
 
     // Metode til at hente alle projekter tilknyttet den enkelte bruger.
     public ArrayList<ProjectModel> getAllProjectsById(int userId) {

@@ -89,6 +89,15 @@ button[type="button"]:hover {
 button:active {
     transform: scale(0.95); /* Let krympning ved klik */
 }
+div {
+    margin-top: 20px; /* Giver mellemrum mellem sektionerne */
+}
+
+button {
+    display: block;
+    margin: 10px 0;
+}
+
 
 /* Responsiv justering */
 @media (max-width: 600px) {

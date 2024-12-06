@@ -1,6 +1,6 @@
-package com.example.alphasolution.Controller;
+package com.example.alphasolution.controller;
 
-import com.example.alphasolution.Model.TaskModel;
+import com.example.alphasolution.model.TaskModel;
 import com.example.alphasolution.Service.ProjectService;
 import com.example.alphasolution.Service.SubTaskService;
 import com.example.alphasolution.Service.TaskService;
