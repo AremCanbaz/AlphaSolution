@@ -8,7 +8,7 @@
 </head>
 <body class="body-form">
 <form th:action="@{/createsubtaskaction}" method="POST">
-    <h1>Opret Delprojekt</h1>
+    <h1>Opret Projekt</h1>
     <label for="subtaskname">Delprojekt navn</label>
     <input type="text" id="subtaskname" name="subtaskname" placeholder="Indtast underopgavens navn" required>
 
@@ -18,6 +18,14 @@
 
     <button type="submit">Opret</button>
 </form>
-    <a th:href="@{/subtaskview(projectid=${projectid})}">Tilbage til delprojekter</a>
+<div class="tilbage-container2">
+   <form th:action="@{/subtaskview}" method="get">
+        <input type="hidden" name="projectid" th:value="${projectid}">
+        <button type="submit" class="btn-tilbage2">Tilbage til Projekter</button>
+    </form>
+</div>
+
+
+
 </body>
 </html>
