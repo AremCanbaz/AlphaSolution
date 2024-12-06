@@ -4,10 +4,10 @@
     <title>Subtask</title>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link th:href="@{/taskview.css}" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/createproject.css}">
 </head>
-<body>
-<div class="logout-button">
+<body class="body-tabel">
+<div class="logout-container">
     <form th:action="@{/logout}" method="post">
         <button type="submit" class="btn-logout">Log ud</button>
     </form>
@@ -19,7 +19,7 @@
     </form>
 </div>
 
-<div class="container">
+<div class="project-container">
     <h1>Velkommen til underopgave siden</h1>
     <p>Underopgave id: <span th:text="${subtaskid}"></span> </p>
     <p>Underopgave navn: <span th:text="${subtaskname}"></span> </p>

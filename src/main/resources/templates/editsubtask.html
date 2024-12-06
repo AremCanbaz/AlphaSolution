@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-  <link th:href="@{/editsubtask.css}" rel="stylesheet">
+  <link rel="stylesheet" th:href="@{/editproject.css}">
 </head>
-<body>
+<body class="body-form">
 <form action="/editSubTaskSucces" method="post">
   <input type="hidden" name="subTaskId" th:value="${subtask.subTaskId}" />
   <input type="hidden" name="projectId" th:value="${subtask.projectid}" /> <!-- Match the controller parameter -->

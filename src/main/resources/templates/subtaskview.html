@@ -3,9 +3,9 @@
 <head>
     <title>Subtask</title>
     <meta charset="UTF-8">
-    <link th:href="@{/subtaskview.css}" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/createproject.css}">
 </head>
-<body>
+<body class="body-tabel">
 <!-- Log ud knap-->
 <div class="logout-container">
     <form th:action="@{/logout}" method="post">
@@ -20,7 +20,7 @@
     </form>
 </div>
 
-<div class="container">
+<div class="project-container">
     <h1>Velkommen til dine delprojekter</h1>
     <p>Projekt id: <span th:text="${projectid}"></span> </p>
     <p>Projekt navn: <span th:text="${projectname}"></span> </p>
