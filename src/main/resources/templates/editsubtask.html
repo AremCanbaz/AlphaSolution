@@ -3,12 +3,13 @@
 <head>
   <link th:href="@{/editsubtask.css}" rel="stylesheet">
 </head>
+<body>
 <form action="/editSubTaskSucces" method="post">
   <input type="hidden" name="subTaskId" th:value="${subtask.subTaskId}" />
   <input type="hidden" name="projectId" th:value="${subtask.projectid}" /> <!-- Match the controller parameter -->
 
   <div>
-    <label for="name">Underopgave Navn:</label>
+    <label for="name">Delprojekt navn:</label>
     <input type="text" id="name" name="subTaskName" th:value="${subtask.subTaskName}" required />
   </div>
 
@@ -17,9 +18,9 @@
     <textarea id="description" name="subTaskDescription" rows="4" required th:text="${subtask.subTaskDescription}"></textarea>
   </div>
 
-  <button type="submit" class="btn-save">Gem</button>
+  <button type="submit" class="btn-save">Gem ændringer</button>
 </form>
 
-
-
+<a th:href="@{/subtaskview(projectid=${projectid})}">Tilbage til dashboardet</a>
+</body>
 </html>

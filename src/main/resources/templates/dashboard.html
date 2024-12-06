@@ -35,18 +35,18 @@
         </tr>
         </thead>
         <tbody>
-        <!-- Loop through the projects -->
+        <!-- Trækker fra projekt objektet -->
         <tr th:each="project : ${projects}">
-            <!-- Klikbart Projektnavn -->
+            <!-- Klikbart Projektnavn og kunne sende videre til delprojekt-->
             <td>
                 <a th:href="@{/subtaskview(projectid=${project.projectId})}"
                    class="project-link"
                    th:text="${project.projectName}">
-                    Project Name
+                    Projekt navn
                 </a>
             </td>
-            <td th:text="${project.description}">Description</td>
-            <td th:text="${project.totalHours}">Total Hours</td>
+            <td th:text="${project.description}">Beskrivelse</td>
+            <td th:text="${project.totalHours}">Antal timer</td>
             <td th:classappend="${project.completed ? 'text-success' : 'text-danger'}"
                 th:text="${project.completed ? 'Fuldført' : 'I gang'}"></td>
             <!-- Slet Projekt Knap -->

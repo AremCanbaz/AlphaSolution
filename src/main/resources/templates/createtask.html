@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" th:href="@{/createtask.css}">
-    <title>Opgave</title>
+    <title>opret opgave</title>
 </head>
 <body>
 <form th:action="@{/opretopgaveaction}" method="POST">
@@ -21,5 +21,6 @@
 
     <button type="submit">Opret</button>
 </form>
+    <a th:href="@{/taskview(subtaskid=${subtaskid})}">Tilbage til opgaver</a>
 </body>
 </html>

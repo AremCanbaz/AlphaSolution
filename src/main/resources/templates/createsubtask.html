@@ -4,19 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" th:href="@{/createsubtask.css}">
-    <title>Projektformular</title>
+    <title>Oprettelse af delprojekt</title>
 </head>
 <body>
 <form th:action="@{/createsubtaskaction}" method="POST">
     <h1>Opret Projekt</h1>
-    <label for="subtaskname">Navn</label>
+    <label for="subtaskname">Delprojekt navn</label>
     <input type="text" id="subtaskname" name="subtaskname" placeholder="Indtast underopgavens navn" required>
 
-    <label for="subtaskdescription">Beskrivelse af underopgaven</label>
+    <label for="subtaskdescription">Beskrivelse af Delprojekt</label>
     <input type="text" id="subtaskdescription" name="subtaskdescription" placeholder="Indtast en kort beskrivelse" required>
     <input type="hidden" name="projectid" th:value="${projectid}">
 
     <button type="submit">Opret</button>
 </form>
+    <a th:href="@{/subtaskview(projectid=${projectid})}">Tilbage til opgaver</a>
 </body>
 </html>

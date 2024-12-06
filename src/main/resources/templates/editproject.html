@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <link th:href="@{/editproject.css}" rel="stylesheet">
-    <title>Edit Project</title>
+    <title>Ændre projekt</title>
 </head>
 <body>
-<h1>Edit Project</h1>
+<h1>Ændre projekt oplysninger</h1>
 
 <form th:action="@{/editprojectSucces}" method="post">
     <!-- Skjulte felter for projectid og userid -->
@@ -14,20 +14,20 @@
     <input type="hidden" name="userid" th:value="${userId}" />
 
     <!-- Projektets navn -->
-    <label for="projectName">Project Name:</label>
+    <label for="projectName">Projekt navn:</label>
     <input type="text" id="projectName" name="projectName" th:value="${project.projectName}" required />
     <br><br>
 
     <!-- Projektets beskrivelse -->
-    <label for="description">Description:</label>
+    <label for="description">Beskrivelse:</label>
     <textarea id="description" name="description" th:text="${project.description}" required></textarea>
     <br><br>
 
     <!-- Gem ændringer -->
-    <button type="submit">Save Changes</button>
+    <button type="submit">Gem ændringer</button>
 </form>
 
 <br>
-<a th:href="@{/dashboard(userId=${userId})}">Back to Dashboard</a>
+<a th:href="@{/dashboard(userId=${userId})}">Tilbage til dashboardet</a>
 </body>
 </html>
