@@ -49,7 +49,7 @@
             </td>
             <td th:text="${task.description}">Beskrivelse</td>
             <td th:text="${task.hoursspent}">Antal timer</td>
-            <td th:classappend="${task.iscompleted ? 'status-completed' : 'status-incomplete'}"
+            <td th:classappend="${task.iscompleted ? 'text-success' : 'text-danger'}"
                 th:text="${task.iscompleted ? 'Fuldført' : 'I gang'}">
             </td>
             <td>
