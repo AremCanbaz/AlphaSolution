@@ -61,11 +61,31 @@ class ProjectControllerTest {
     }
 
     @Test
-    void addProject() {
+    void addProject() throws Exception {
+        int userId = 1;
+        String projectName = "Test";
+        String projectDescription = "Test";
+
+        doNothing().when(projectService).createProject(projectName, projectDescription, userId);
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/createproject").
+                param("userId", String.valueOf(userId)).
+                param("projectname", projectName).
+                param("description", projectDescription))
+                .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
+                .andExpect(MockMvcResultMatchers.view().name("redirect:/dashboardview?userId=" + userId));
+        verify(projectService,times(1)).createProject(projectName, projectDescription, userId);
+
     }
 
     @Test
-    void createProject() {
+    void createProject() throws Exception {
+        int userId = 1;
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/createprojectview").param("userId", String.valueOf(userId)))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.view().name("createproject"))
+                .andExpect(MockMvcResultMatchers.model().attribute("userId",userId));
     }
 
     @Test
