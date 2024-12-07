@@ -3,6 +3,7 @@ package com.example.alphasolution.controller;
 import com.example.alphasolution.model.SubTaskModel;
 import com.example.alphasolution.Service.ProjectService;
 import com.example.alphasolution.Service.SubTaskService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,13 +24,18 @@ public class SubTaskController {
 
     // Controller til at fremvise alle delprojekter
     @GetMapping("/subtaskview")
-    public String subtaskview(@RequestParam int projectid, Model model) {
+    public String subtaskview(@RequestParam int projectid, HttpSession session, Model model) {
+        Integer userId = (Integer) session.getAttribute("userId");
+
+        if (userId == null) {
+            return "redirect:/login";
+        }
+
         ArrayList<SubTaskModel> subtasks = subTaskService.getAllSubTasks(projectid);
         subTaskService.updateProjectIscomplete(projectid);
         projectService.getTotalHours(projectid);
         System.out.println(projectid);
 
-        int userId = subTaskService.getUseridByProjectId(projectid);
         String projectName = projectService.getProjectName(projectid);
         model.addAttribute("subtasks", subtasks);
         model.addAttribute("projectid", projectid);

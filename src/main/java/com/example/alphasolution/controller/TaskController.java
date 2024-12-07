@@ -1,9 +1,9 @@
 package com.example.alphasolution.controller;
 
 import com.example.alphasolution.model.TaskModel;
-import com.example.alphasolution.Service.ProjectService;
 import com.example.alphasolution.Service.SubTaskService;
 import com.example.alphasolution.Service.TaskService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,14 +19,16 @@ public class TaskController {
     @Autowired
     SubTaskService subTaskService;
     @Autowired
-    ProjectService projectService;
-    @Autowired
     TaskService taskService;
 
     //Controller til at fremvise opgave siden
     @GetMapping("/taskview")
-    public String subtaskview(@RequestParam int subtaskid,
-                              Model model) {
+    public String subtaskview(@RequestParam int subtaskid, HttpSession session, Model model) {
+        Integer userId = (Integer) session.getAttribute("userId");
+        if (userId == null) {
+            //
+            return "redirect:/login";
+        }
         // Hente opgaverne af delprojekt id
         ArrayList<TaskModel> tasks = taskService.getTasks(subtaskid);
         // hente navnet på delprojektet.
