@@ -89,11 +89,41 @@ class ProjectControllerTest {
     }
 
     @Test
-    void editProject() {
+    void editProject() throws Exception {
+        int userId = 1;
+        int projectId = 1;
+        ProjectModel projectModel = new ProjectModel(projectId,"Test","Test",10,false);
+        when(projectService.getProjectById(projectId)).thenReturn(projectModel);
+        mockMvc.perform(MockMvcRequestBuilders.get("/editproject")
+                .param("projectid", String.valueOf(projectId))
+                .param("userid",String.valueOf(userId)))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.view().name("edit-project"))
+                .andExpect(MockMvcResultMatchers.model().attribute("userId",userId))
+                .andExpect(MockMvcResultMatchers.model().attribute("projectid",projectId))
+                .andExpect(MockMvcResultMatchers.model().attribute("project",projectModel));
+
+        verify(projectService,times(1)).getProjectById(projectId);
     }
 
     @Test
-    void editProjectSucces() {
+    void editProjectSucces() throws Exception {
+        int userId = 1;
+        int projectId = 1;
+        String projectName = "Test";
+        String projectDescription = "Test";
+        doNothing().when(projectService).editProject(projectName, projectDescription, projectId);
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/editprojectSucces")
+                .param("projectName", projectName)
+                .param("description", projectDescription)
+                .param("projectid", String.valueOf(projectId))
+                .param("userid", String.valueOf(userId)))
+                .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
+                .andExpect(MockMvcResultMatchers.view().name("redirect:/dashboardview?userId=" + userId));
+
+
+        verify(projectService,times(1)).editProject(projectName, projectDescription, projectId);
     }
 
     @Test

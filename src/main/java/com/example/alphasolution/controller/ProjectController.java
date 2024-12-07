@@ -54,7 +54,7 @@ public class ProjectController {
         model.addAttribute("projectid", projectid);
         model.addAttribute("userId", userid);
         model.addAttribute("project",project);
-        return "editproject";
+        return "edit-project";
     }
     // Kontroller til at ændre eksisterende projekter og sende tilbage til dashboard
     @PostMapping("/editprojectSucces")
