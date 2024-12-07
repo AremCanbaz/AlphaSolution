@@ -8,7 +8,7 @@ public class SubTaskModel {
     private int subTaskTime;
     private boolean subTaskStatus;
 
-
+    //Konstruktør til Delprojekt opgave
     public SubTaskModel(int projectid, int subTaskId, String subTaskName,String subTaskDescription, int subTaskTime, boolean subTaskStatus){
         this.projectid = projectid;
         this.subTaskId = subTaskId;
@@ -17,6 +17,7 @@ public class SubTaskModel {
         this.subTaskTime = subTaskTime;
         this.subTaskStatus = subTaskStatus;
     }
+    //Konstruktør til Delprojekt opgave
     public SubTaskModel(int subTaskId, String subTaskName, String subTaskDescription, int projectid){
         this.projectid = projectid;
         this.subTaskId = subTaskId;

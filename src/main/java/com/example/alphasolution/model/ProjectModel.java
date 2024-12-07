@@ -7,8 +7,7 @@ public class ProjectModel {
     private int totalHours;
     private boolean iscompleted;
 
-    public ProjectModel() {}
-
+    // Konstruktør til ProjektModellen
     public ProjectModel(int projectId, String projectName, String description, int totalHours, boolean iscompleted) {
         this.projectId = projectId;
         this.projectName = projectName;

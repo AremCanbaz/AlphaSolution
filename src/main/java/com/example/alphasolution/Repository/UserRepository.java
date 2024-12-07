@@ -10,6 +10,8 @@ import java.sql.*;
 public class UserRepository {
     Connection connection = DbManager.getConnection();
 
+
+    //Metode til at oprette bruger og sende den til databasen
     public void addUser(UserModel user) {
         String useraddSQL = "insert into users(username, passwordd, email) values(?,?,?)";
         try {
@@ -23,6 +25,7 @@ public class UserRepository {
         }
     }
 
+    //Metode til at finde en bruger vha af bruger navn og adgangskode.
     public UserModel findUserByUsernameAndPassword(String username, String password) {
         String sql = "select * from users where username = ? and passwordd = ?";
         try {
@@ -44,6 +47,7 @@ public class UserRepository {
         return null;
     }
 
+    //Metode til at finde brugeren vha af brugerid
     public String findUsernameByUserId(int userId) {
         String sql = "SELECT username FROM users WHERE userid = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {

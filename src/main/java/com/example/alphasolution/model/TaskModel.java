@@ -7,7 +7,7 @@ public class TaskModel {
     String description;
     int hoursspent;
     Boolean iscompleted;
-
+    //Konstruktør til opgave
     public TaskModel(int taskid, int subTaskId, String taskName, String description, int hoursspent, boolean iscompleted) {
         this.subTaskId = subTaskId;
         this.taskid = taskid;

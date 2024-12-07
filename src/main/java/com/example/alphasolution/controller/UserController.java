@@ -28,7 +28,7 @@ public class UserController {
     public String processLoginForm(@RequestParam String username, @RequestParam String password) {
         UserModel user = userService.authenticate(username, password);
         if (user != null) {
-            return "redirect:/dashboard?userId=" + user.getId();  // Omdirigér til dashboardet
+            return "redirect:/dashboardview?userId=" + user.getId();  // Omdirigér til dashboardet
         }
         return "login";
     }
@@ -53,6 +53,7 @@ public class UserController {
             return "createUser";
         }
     }
+    // Logud knap der benyttes af alle sider og sender brugeren tilbage til login.
     @PostMapping("logout")
     public String processLogout() {
         return "login";

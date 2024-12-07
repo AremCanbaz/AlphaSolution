@@ -18,38 +18,45 @@ public class ProjectController {
     @Autowired
     private UserService userService;
 
-
-    @GetMapping("/dashboard")
-    public String showDashboard(@RequestParam("userId") int userId, Model model) {
+    // Controller til at vise dashboard ved hjælp af userId
+    @GetMapping("/dashboardview")
+    public String showDashboard(@RequestParam("userId") int userId,
+                                Model model) {
         ArrayList<ProjectModel> projects = projectService.projectList(userId);
         String username = userService.findUsernamebyUserid(userId);
         model.addAttribute("projects", projects);
         model.addAttribute("userId", userId);
         model.addAttribute("username", username);
-        System.out.println(projects);
         return "dashboard";
     }
-
+    // Controller til at oprette projekter som kræver 3 parametre
     @PostMapping("/createproject")
-    public String addProject(@RequestParam("userId")int userId , @RequestParam("projectname") String projectname, @RequestParam("description") String description) {
+    public String addProject(@RequestParam("userId")int userId,
+                             @RequestParam("projectname") String projectname,
+                             @RequestParam("description") String description) {
         projectService.createProject(projectname, description, userId);
 
-      return "redirect:/dashboard?userId=" + userId;
+      return "redirect:/dashboardview?userId=" + userId;
     }
+    // Controller der fremviser siden til at oprette projekter
     @GetMapping("/createprojectview")
-    public String createProject(@RequestParam("userId") int userid, Model model) {
+    public String createProject(@RequestParam("userId") int userid,
+                                Model model) {
         model.addAttribute("userId", userid);
         return "createproject";
     }
-
+    // Kontroller til at ændre eksisterende projekter siden
     @GetMapping("/editproject")
-    public String editProject(@RequestParam("projectid") int projectid,@RequestParam("userid") int userid, Model model) {
+    public String editProject(@RequestParam("projectid") int projectid,
+                              @RequestParam("userid") int userid,
+                              Model model) {
         ProjectModel project = projectService.getProjectById(projectid);
         model.addAttribute("projectid", projectid);
         model.addAttribute("userId", userid);
         model.addAttribute("project",project);
         return "editproject";
     }
+    // Kontroller til at ændre eksisterende projekter og sende tilbage til dashboard
     @PostMapping("/editprojectSucces")
     public String editProjectSucces(@RequestParam("projectName") String projectName,
                                     @RequestParam("description") String description,
@@ -57,30 +64,33 @@ public class ProjectController {
                                     @RequestParam("userid") int userid
                                     ) {
         projectService.editProject(projectName, description, projectid);
-        return "redirect:/dashboard?userId=" + userid;
+        return "redirect:/dashboardview?userId=" + userid;
     }
+    // Controller til at slette projekter og sende tilbage til dashboard med userId
     @PostMapping("deleteproject")
-    public String deleteProject(@RequestParam("projectid") int projectid , @RequestParam("userid") int userid) {
+    public String deleteProject(@RequestParam("projectid") int projectid ,
+                                @RequestParam("userid") int userid) {
         projectService.deleteProject(projectid);
-        return "redirect:/dashboard?userId=" + userid;
+        return "redirect:/dashboardview?userId=" + userid;
     }
 
     // søge funktion til projekter
     @PostMapping("searchproject")
-    public String searchProject(@RequestParam String projectName, @RequestParam int userId, Model model) {
+    public String searchProject(@RequestParam String projectName,
+                                @RequestParam int userId,
+                                Model model) {
         ArrayList<ProjectModel> userProjects = projectService.projectList(userId);
-
 
         ProjectModel project = projectService.getProjectByName(projectName, userProjects);
 
         if (project != null) {
-            return "redirect:/subtaskview?projectid=" + project.getProjectId();
+            return "redirect:/subtask-view?projectid=" + project.getProjectId();
         } else {
             model.addAttribute("Fejl", "Ingen projekter fundet med navnet: " + projectName);
         }
 
 
-        return "dashboard";
+        return "redirect:/dashboardview?userId=" + userId;
     }
 
 

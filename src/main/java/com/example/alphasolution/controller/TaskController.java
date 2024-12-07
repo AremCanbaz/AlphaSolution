@@ -15,6 +15,7 @@ import java.util.ArrayList;
 
 @Controller
 public class TaskController {
+    //Indsættelse af service klasserne til brug af controllerne
     @Autowired
     SubTaskService subTaskService;
     @Autowired
@@ -22,12 +23,19 @@ public class TaskController {
     @Autowired
     TaskService taskService;
 
+    //Controller til at fremvise opgave siden
     @GetMapping("/taskview")
-    public String subtaskview(@RequestParam int subtaskid, Model model) {
+    public String subtaskview(@RequestParam int subtaskid,
+                              Model model) {
+        // Hente opgaverne af delprojekt id
         ArrayList<TaskModel> tasks = taskService.getTasks(subtaskid);
+        // hente navnet på delprojektet.
         String subtaskName = subTaskService.getSubtaskName(subtaskid);
+        // samling af tiden af alle opgaverne til at sende dem til delprojektet
         subTaskService.getTotalHoursForSubTask(subtaskid);
+        // Ændre til true ved delprojekt hvis alle opgaverne er true
         taskService.updateSubTaskToTrueIfAllTaskAreDone(subtaskid);
+        // hente projektid af delprojekt id
         int projectid = taskService.getProjectIdBySubtaskId(subtaskid);
         model.addAttribute("tasks", tasks);
         model.addAttribute("subtaskid", subtaskid);
@@ -35,52 +43,53 @@ public class TaskController {
         model.addAttribute("projectid", projectid);
         return "taskview";
     }
+    // Hente opret opgave siden
     @GetMapping("/opretopgaveview")
-    public String opretopgaveview(@RequestParam int subtaskid, Model model) {
+    public String opretopgaveview(@RequestParam int subtaskid,
+                                  Model model) {
         model.addAttribute("subtaskid", subtaskid);
         return "createtask";
-
     }
+    // Sender oprettelse af opgaven videre til databasen og sender brugeren tilbage til opgave siden
     @PostMapping("/opretopgaveaction")
-    public String opretopgave(@RequestParam int subtaskid, @RequestParam String taskname, @RequestParam String taskdescription, @RequestParam int time) {
+    public String opretopgave(@RequestParam int subtaskid,
+                              @RequestParam String taskname,
+                              @RequestParam String taskdescription,
+                              @RequestParam int time) {
         taskService.createtask(subtaskid, taskname, taskdescription, time);
         return "redirect:/taskview?subtaskid=" + subtaskid;
 
     }
+    // Kontrolleren sletter opgaven i databasen, og sender brugeren tilbage til opgave siden
     @PostMapping("deletetask")
-    public String deletetask(@RequestParam int subtaskid, @RequestParam int taskid) {
+    public String deletetask(@RequestParam int subtaskid,
+                             @RequestParam int taskid) {
         taskService.deletetask(taskid);
         return "redirect:/taskview?subtaskid=" + subtaskid;
     }
+    // Henter ændre opgave siden
     @GetMapping("edittask")
-    public String edittask(@RequestParam int taskId, @RequestParam int subtaskid, Model model) {
+    public String edittask(@RequestParam int taskId,
+                           @RequestParam int subtaskid,
+                           Model model) {
+        // henter den specifikke opgave der skal ændres
         TaskModel taskModel = taskService.getTask(taskId);
-        if (taskModel == null) {
-            System.out.println("TaskModel is null for taskId: " + taskId);
-            return "error"; // Eller en side, der håndterer fejlen
-        }
         model.addAttribute("taskid", taskId);
         model.addAttribute("subtaskid", subtaskid);
         model.addAttribute("taskmodel", taskModel);
         return "edittask";
     }
+    //Sender ændringerne af opgaven til databasen
     @PostMapping("edittaskSucces")
     public String edittaskSucces(
             @RequestParam int taskid,
             @RequestParam String taskname,
             @RequestParam String description,
             @RequestParam int hoursspent,
+            // DefaultValue = "False" er sat ind, hvis den markeret box er falsk bliver det sendt ind i databasen er falsk, ellers virkede det ikke.
             @RequestParam(defaultValue = "false") boolean iscompleted,
             @RequestParam int subtaskid) {
-
-        // Debugging logs
-        System.out.println("taskid: " + taskid);
-        System.out.println("taskname: " + taskname);
-        System.out.println("description: " + description);
-        System.out.println("hoursspent: " + hoursspent);
-        System.out.println("iscompleted: " + iscompleted);
-        System.out.println("subtaskid: " + subtaskid);
-
+        //Metode til at opdatere opgaven i databasen
         taskService.updatetask(taskid, taskname, description, hoursspent, iscompleted);
         return "redirect:/taskview?subtaskid=" + subtaskid;
 

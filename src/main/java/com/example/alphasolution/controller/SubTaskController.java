@@ -14,11 +14,14 @@ import java.util.ArrayList;
 
 @Controller
 public class SubTaskController {
+
+    // Indhente service klasserne til controllerne
     @Autowired
     SubTaskService subTaskService;
     @Autowired
     ProjectService projectService;
 
+    // Controller til at fremvise alle delprojekter
     @GetMapping("/subtaskview")
     public String subtaskview(@RequestParam int projectid, Model model) {
         ArrayList<SubTaskModel> subtasks = subTaskService.getAllSubTasks(projectid);
@@ -33,37 +36,55 @@ public class SubTaskController {
         model.addAttribute("projectname", projectName);
         model.addAttribute("userId", userId);
 
-        return "subtaskview";
+        return "subtask-view";
     }
 
+    // Controller til at slette delprojekter og sende tilbage til delprojekt siden.
     @PostMapping("/deleteSubTask")
-    public String deleteSubTask(@RequestParam("subtaskId") int subTaskId, @RequestParam("projectid") int projectId) {
+    public String deleteSubTask(@RequestParam("subtaskId") int subTaskId,
+                                @RequestParam("projectid") int projectId) {
         subTaskService.deleteSubTask(subTaskId);
-        return "redirect:/subtaskview?projectid=" + projectId; // Redirect tilbage til samme side
+        return "redirect:/subtask-view?projectid=" + projectId; // Redirect tilbage til samme side
     }
 
+    // Controller til at fremvise siden til at oprette delprojekter tilknyttet projektId
     @GetMapping("/createSubTaskView")
-    public String createsubtaskview(@RequestParam int projectid, Model model) {
+    public String createsubtaskview(@RequestParam int projectid,
+                                    Model model) {
         model.addAttribute("projectid", projectid);
         return "createsubtask";
 
     }
-
+    // Controller til at oprette delprojekter med 3 parametre
     @PostMapping("/createsubtaskaction")
-    public String createsubtask(@RequestParam int projectid, @RequestParam String subtaskname, @RequestParam String subtaskdescription) {
+    public String createsubtask(@RequestParam int projectid,
+                                @RequestParam String subtaskname,
+                                @RequestParam String subtaskdescription) {
         subTaskService.createSubTask(projectid, subtaskname, subtaskdescription);
-        return "redirect:/subtaskview?projectid=" + projectid;
+        return "redirect:/subtask-view?projectid=" + projectid;
 
     }
+    // Controller til at vise ændre delprojekter siden
     @GetMapping("/editsubtask")
-    public String editProject(@RequestParam("subtaskid") int subtaskid,@RequestParam("projectid") int projectid, Model model) {
+    public String editProject(@RequestParam("subtaskid") int subtaskid,
+                              @RequestParam("projectid") int projectid,
+                              Model model) {
         SubTaskModel subTaskModel = subTaskService.findSubTaskById(subtaskid);
-        System.out.println("Received subtaskid: " + subtaskid + ", projectid: " + projectid + "subtaskname" + subTaskModel.getSubTaskName());
+        if (subTaskModel == null) {
+            System.err.println("Subtask not found for ID: " + subtaskid);
+            return "error"; // Sørg for at have en "error.html"-template
+        }
+
+        System.out.println("Received subtaskid: " + subtaskid + ", projectid: " + projectid +
+                ", subtaskname: " + subTaskModel.getSubTaskName());
+
         model.addAttribute("subtaskid", subtaskid);
         model.addAttribute("projectid", projectid);
-        model.addAttribute("subtask",subTaskModel);
-        return "editsubtask";
+        model.addAttribute("subtask", subTaskModel);
+
+        return "edit-subtask";
     }
+    //Controller til at sende ændringer af delprojektet til databasen.
     @PostMapping("/editSubTaskSucces")
     public String editProjectSucces(@RequestParam("subTaskName") String subTaskName,
                                     @RequestParam("subTaskDescription") String subTaskDescription,
@@ -71,7 +92,7 @@ public class SubTaskController {
                                     @RequestParam("projectId") int projectid
     ) {
         subTaskService.editSubTask(subTaskId, subTaskName, subTaskDescription);
-        return "redirect:/subtaskview?projectid=" + projectid;
+        return "redirect:/subtask-view?projectid=" + projectid;
     }
 
 }

@@ -6,6 +6,7 @@ public class UserModel {
     private String password;
     private String email;
 
+    //Konstruktør til BrugerModellen
     public UserModel(String username, String password, String email) {
         this.username = username;
         this.password = password;
