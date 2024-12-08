@@ -19,7 +19,9 @@
     <!--Søge funktion-->
     <div class="search-container" >
         <form th:action="@{/searchproject}" method="post">
-            <input type="text" name="projectName" placeholder="Søg efter projektnavn" class="search-box" required />
+            <label>
+                <input type="text" name="projectName" placeholder="Søg efter Projekt" class="search-box" required />
+            </label>
             <input type="hidden" name="userId" th:value="${userId}" />
               <button type="submit" class="btn-search">Søg  <i class="fas fa-search"></i></button>
         </form>

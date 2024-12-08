@@ -2,6 +2,7 @@ package com.example.alphasolution.controller;
 
 import com.example.alphasolution.model.UserModel;
 import com.example.alphasolution.Service.UserService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,9 +26,11 @@ public class UserController {
 
     // Håndterer login-formularen
     @PostMapping("/loginSucces")
-    public String processLoginForm(@RequestParam String username, @RequestParam String password) {
+    public String processLoginForm(@RequestParam String username, @RequestParam String password, HttpSession session) {
         UserModel user = userService.authenticate(username, password);
         if (user != null) {
+            session.setAttribute("userId", user.getId());
+            session.setAttribute("username", user.getUsername());
             return "redirect:/dashboardview?userId=" + user.getId();  // Omdirigér til dashboardet
         }
         return "login";
@@ -55,7 +58,8 @@ public class UserController {
     }
     // Logud knap der benyttes af alle sider og sender brugeren tilbage til login.
     @PostMapping("logout")
-    public String processLogout() {
-        return "login";
+    public String processLogout(HttpSession session) {
+        session.invalidate();
+        return "redirect:/login";
     }
 }
