@@ -10,6 +10,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -127,7 +128,16 @@ class ProjectControllerTest {
     }
 
     @Test
-    void deleteProject() {
+    void deleteProject() throws Exception {
+        int projectId = 1;
+        int userId = 1;
+        doNothing().when(projectService).deleteProject(projectId);
+        mockMvc.perform(MockMvcRequestBuilders.post("/deleteproject")
+                .param("projectid", String.valueOf(projectId))
+                .param("userid", String.valueOf(userId)))
+                .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
+                .andExpect(MockMvcResultMatchers.view().name("redirect:/dashboardview?userId="+userId));
+        verify(projectService,times(1)).deleteProject(projectId);
     }
 
     @Test

@@ -41,7 +41,7 @@ public class TaskController {
         model.addAttribute("subtaskid", subtaskid);
         model.addAttribute("subtaskname", subtaskName);
         model.addAttribute("projectid", projectid);
-        return "taskview";
+        return "task-view";
     }
     // Hente opret opgave siden
     @GetMapping("/opretopgaveview")
@@ -77,7 +77,7 @@ public class TaskController {
         model.addAttribute("taskid", taskId);
         model.addAttribute("subtaskid", subtaskid);
         model.addAttribute("taskmodel", taskModel);
-        return "edittask";
+        return "edit-task";
     }
     //Sender ændringerne af opgaven til databasen
     @PostMapping("edittaskSucces")

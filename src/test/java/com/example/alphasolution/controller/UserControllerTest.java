@@ -61,7 +61,7 @@ class UserControllerTest {
                         .param("username", username)
                 .param("password",password))
                 .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
-                .andExpect(MockMvcResultMatchers.redirectedUrl("/dashboard?userId="+ userModel.getId()));
+                .andExpect(MockMvcResultMatchers.redirectedUrl("/dashboardview?userId="+ userModel.getId()));
 
         verify(userService, times(1)).authenticate(username,password);
     }

@@ -72,7 +72,7 @@ class SubTaskControllerTest {
                         .param("subtaskId", String.valueOf(subTaskId))
                         .param("projectid", String.valueOf(projectId)))
                 .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
-                .andExpect(MockMvcResultMatchers.redirectedUrl("/subtaskview?projectid=" + projectId));
+                .andExpect(MockMvcResultMatchers.redirectedUrl("/subtask-view?projectid=" + projectId));
 
         verify(subTaskService, times(1)).deleteSubTask(subTaskId);
     }
@@ -101,7 +101,7 @@ class SubTaskControllerTest {
                         .param("subtaskname", subtaskName)
                         .param("subtaskdescription", subtaskDescription))
                 .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
-                .andExpect(MockMvcResultMatchers.redirectedUrl("/subtaskview?projectid=" + projectId));
+                .andExpect(MockMvcResultMatchers.redirectedUrl("/subtask-view?projectid=" + projectId));
 
         verify(subTaskService, times(1)).createSubTask(projectId, subtaskName, subtaskDescription);
     }
@@ -142,7 +142,7 @@ class SubTaskControllerTest {
                         .param("subTaskName", subTaskName)
                         .param("subTaskDescription", subTaskDescription))
                 .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
-                .andExpect(MockMvcResultMatchers.redirectedUrl("/subtaskview?projectid=" + projectId));
+                .andExpect(MockMvcResultMatchers.redirectedUrl("/subtask-view?projectid=" + projectId));
 
         verify(subTaskService, times(1)).editSubTask(subTaskId, subTaskName, subTaskDescription);
     }

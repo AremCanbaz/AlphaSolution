@@ -27,7 +27,6 @@ public class SubTaskController {
         ArrayList<SubTaskModel> subtasks = subTaskService.getAllSubTasks(projectid);
         subTaskService.updateProjectIscomplete(projectid);
         projectService.getTotalHours(projectid);
-        System.out.println(projectid);
 
         int userId = subTaskService.getUseridByProjectId(projectid);
         String projectName = projectService.getProjectName(projectid);
