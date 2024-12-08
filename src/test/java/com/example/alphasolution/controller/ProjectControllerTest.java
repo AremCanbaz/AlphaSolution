@@ -4,6 +4,7 @@ import com.example.alphasolution.Service.ProjectService;
 import com.example.alphasolution.Service.UserService;
 import com.example.alphasolution.model.ProjectModel;
 import com.example.alphasolution.model.UserModel;
+import jakarta.servlet.http.HttpSession;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -39,24 +40,28 @@ class ProjectControllerTest {
 
     @Test
     void showDashboard() throws Exception {
-        int userId = 1;
+        int userId = 13;
+
         String username = "admin";
-        UserModel userModel = new UserModel();
-        userModel.setId(userId);
-        userModel.setUsername(username);
         ArrayList<ProjectModel> projects = new ArrayList<>();
         projects.add(new ProjectModel(1,"Test","Test",10,false));
 
-        when(userService.findUsernamebyUserid(userId)).thenReturn(username);
+        HttpSession mockSession = mock(HttpSession.class);
+        when(mockSession.getAttribute("userId")).thenReturn(userId);
+        when(mockSession.getAttribute("username")).thenReturn(username);
+
         when(projectService.projectList(userId)).thenReturn(projects);
-        mockMvc.perform(MockMvcRequestBuilders.get("/dashboardview").param("userId", String.valueOf(userId)))
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/dashboardview").param("userId", String.valueOf(userId))
+                        .sessionAttr("userId", userId)
+                        .sessionAttr("username", username))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.view().name("dashboard"))
                 .andExpect(MockMvcResultMatchers.model().attribute("projects", projects))
                 .andExpect(MockMvcResultMatchers.model().attribute("userId", userId))
                 .andExpect(MockMvcResultMatchers.model().attribute("username", username));
 
-        verify(userService,times(1)).findUsernamebyUserid(userId);
+
         verify(projectService,times(1)).projectList(userId);
 
     }
@@ -66,13 +71,16 @@ class ProjectControllerTest {
         int userId = 1;
         String projectName = "Test";
         String projectDescription = "Test";
+        HttpSession mockSession = mock(HttpSession.class);
+        when(mockSession.getAttribute("userId")).thenReturn(userId);
+
 
         doNothing().when(projectService).createProject(projectName, projectDescription, userId);
 
         mockMvc.perform(MockMvcRequestBuilders.post("/createproject").
                 param("userId", String.valueOf(userId)).
                 param("projectname", projectName).
-                param("description", projectDescription))
+                param("description", projectDescription).sessionAttr("userId", userId))
                 .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
                 .andExpect(MockMvcResultMatchers.view().name("redirect:/dashboardview?userId=" + userId));
         verify(projectService,times(1)).createProject(projectName, projectDescription, userId);

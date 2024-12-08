@@ -23,7 +23,8 @@
 
     <!-- Opgave timer -->
     <label for="time">Timer:</label>
-    <input type="number" id="time" name="hoursspent" th:value="${taskmodel.hoursspent}" required />
+    <input type="text" id="time" name="hoursspent" th:value="${taskmodel.hoursspent}" required
+                 pattern="\d+" title="Indtast venligst et gyldigt nummer">
     <br><br>
 
     <!-- Opgave status -->

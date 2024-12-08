@@ -57,7 +57,7 @@
                 th:text="${subtask.subTaskStatus ? 'Fuldført' : 'I gang'}"></td>
             <td>
                 <!-- Ændre knappen-->
-                <form action="/editsubtask" method="get">
+                <form th:action="@{/editsubtask}" method="get">
                     <input type="hidden" name="subtaskid" th:value="${subtask.subTaskId}" />
                     <input type="hidden" name="projectid" th:value="${projectid}" />
                     <button class="btn-edit">Rediger  <i class="fas fa-edit"></i></button>
@@ -65,7 +65,7 @@
             </td>
             <td>
                 <!-- Slet knap -->
-                <form action="/deleteSubTask" method="post">
+                <form th:action="@{/deleteSubTask}" method="post">
                     <input type="hidden" name="subtaskId" th:value="${subtask.subTaskId}" />
                     <input type="hidden" name="projectid" th:value="${projectid}" />
                     <button class="btn-delete" type="submit">Slet <i class="fas fa-trash"></i></button>

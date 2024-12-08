@@ -40,10 +40,7 @@ public class SubTaskModel {
     public void setProjectid(int projectid) {
         this.projectid = projectid;
     }
-    public int getSubTaskId() {
-        return subTaskId;
-
-    }
+    public int getSubTaskId() {return subTaskId;}
     public void setSubTaskId(int subTaskId) {
         this.subTaskId = subTaskId;
     }

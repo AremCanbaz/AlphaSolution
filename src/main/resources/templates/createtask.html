@@ -17,7 +17,8 @@
     <input type="hidden" name="subtaskid" th:value="${subtaskid}">
 
     <label for="time">Tid</label>
-    <input type="text" id="time" name="time" placeholder="Indtast varighed" required>
+    <input type="text" id="time" name="time" placeholder="Indtast varighed" required
+           pattern="\d+" title="Indtast venligst et gyldigt nummer">
 
     <button type="submit">Opret</button>
 </form>

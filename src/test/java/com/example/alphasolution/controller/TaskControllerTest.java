@@ -5,6 +5,7 @@ import com.example.alphasolution.Service.SubTaskService;
 import com.example.alphasolution.Service.TaskService;
 import com.example.alphasolution.model.SubTaskModel;
 import com.example.alphasolution.model.TaskModel;
+import jakarta.servlet.http.HttpSession;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -45,6 +46,11 @@ class TaskControllerTest {
         int subtaskId = 1;
         int projectId = 4;
         String subtaskName = "subtaskName";
+        int userId = 123;
+
+        HttpSession mockSession = mock(HttpSession.class);
+        when(mockSession.getAttribute("userId")).thenReturn(userId);
+
         SubTaskModel subTaskModelTest = new SubTaskModel();
         subTaskModelTest.setProjectid(projectId);
         subTaskModelTest.setSubTaskId(subtaskId);
@@ -61,7 +67,8 @@ class TaskControllerTest {
         doNothing().when(taskService).updateSubTaskToTrueIfAllTaskAreDone(subtaskId);
         when(taskService.getProjectIdBySubtaskId(subtaskId)).thenReturn(projectId);
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/taskview").param("subtaskid", String.valueOf(subtaskId)))
+        mockMvc.perform(MockMvcRequestBuilders.get("/taskview").param("subtaskid", String.valueOf(subtaskId))
+                        .sessionAttr("userId", userId))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.view().name("task-view"))
                 .andExpect(MockMvcResultMatchers.model().attribute("tasks", tasksTest))

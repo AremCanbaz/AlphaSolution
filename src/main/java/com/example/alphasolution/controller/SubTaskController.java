@@ -24,7 +24,7 @@ public class SubTaskController {
 
     // Controller til at fremvise alle delprojekter
     @GetMapping("/subtaskview")
-    public String subtaskview(@RequestParam int projectid, HttpSession session, Model model) {
+    public String subtaskview(@RequestParam int projectid, Model model,HttpSession session) {
         Integer userId = (Integer) session.getAttribute("userId");
 
         if (userId == null) {
@@ -47,15 +47,24 @@ public class SubTaskController {
     // Controller til at slette delprojekter og sende tilbage til delprojekt siden.
     @PostMapping("/deleteSubTask")
     public String deleteSubTask(@RequestParam("subtaskId") int subTaskId,
-                                @RequestParam("projectid") int projectId) {
+                                @RequestParam("projectid") int projectId, HttpSession session) {
+        Integer userId = (Integer) session.getAttribute("userId");
+
+
+        System.out.println("User ID in session: " + userId);
         subTaskService.deleteSubTask(subTaskId);
-        return "redirect:/subtask-view?projectid=" + projectId; // Redirect tilbage til samme side
+        return "redirect:/subtaskview?projectid=" + projectId; // Redirect tilbage til samme side
     }
 
     // Controller til at fremvise siden til at oprette delprojekter tilknyttet projektId
     @GetMapping("/createSubTaskView")
     public String createsubtaskview(@RequestParam int projectid,
-                                    Model model) {
+                                    Model model, HttpSession session) {
+        Integer userId = (Integer) session.getAttribute("userId");
+        if (userId == null) {
+            // sender dig tilbage til login hvis session er ikke valid
+            return "redirect:/login";
+        }
         model.addAttribute("projectid", projectid);
         return "createsubtask";
 
@@ -64,21 +73,26 @@ public class SubTaskController {
     @PostMapping("/createsubtaskaction")
     public String createsubtask(@RequestParam int projectid,
                                 @RequestParam String subtaskname,
-                                @RequestParam String subtaskdescription) {
+                                @RequestParam String subtaskdescription, HttpSession session) {
+        Integer userId = (Integer) session.getAttribute("userId");
+
+        System.out.println("User ID in session: " + userId);
         subTaskService.createSubTask(projectid, subtaskname, subtaskdescription);
-        return "redirect:/subtask-view?projectid=" + projectid;
+        return "redirect:/subtaskview?projectid=" + projectid;
 
     }
     // Controller til at vise ændre delprojekter siden
     @GetMapping("/editsubtask")
     public String editProject(@RequestParam("subtaskid") int subtaskid,
                               @RequestParam("projectid") int projectid,
-                              Model model) {
-        SubTaskModel subTaskModel = subTaskService.findSubTaskById(subtaskid);
-        if (subTaskModel == null) {
-            System.err.println("Subtask not found for ID: " + subtaskid);
-            return "error"; // Sørg for at have en "error.html"-template
+                              Model model, HttpSession session) {
+        Integer userId = (Integer) session.getAttribute("userId");
+        if (userId == null) {
+            // sender dig tilbage til login hvis session er ikke valid
+            return "redirect:/login";
         }
+        SubTaskModel subTaskModel = subTaskService.findSubTaskById(subtaskid);
+
 
         System.out.println("Received subtaskid: " + subtaskid + ", projectid: " + projectid +
                 ", subtaskname: " + subTaskModel.getSubTaskName());
@@ -94,10 +108,11 @@ public class SubTaskController {
     public String editProjectSucces(@RequestParam("subTaskName") String subTaskName,
                                     @RequestParam("subTaskDescription") String subTaskDescription,
                                     @RequestParam("subTaskId") int subTaskId,
-                                    @RequestParam("projectId") int projectid
-    ) {
+                                    @RequestParam("projectId") int projectid,HttpSession session)
+    {
+
         subTaskService.editSubTask(subTaskId, subTaskName, subTaskDescription);
-        return "redirect:/subtask-view?projectid=" + projectid;
+        return "redirect:/subtaskview?projectid=" + projectid;
     }
 
 }

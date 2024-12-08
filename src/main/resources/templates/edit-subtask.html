@@ -4,7 +4,7 @@
   <link rel="stylesheet" th:href="@{/editproject.css}">
 </head>
 <body class="body-form">
-<form action="/editSubTaskSucces" method="post">
+<form th:action="@{/editSubTaskSucces}" method="post">
   <input type="hidden" name="subTaskId" th:value="${subtask.subTaskId}" />
   <input type="hidden" name="projectId" th:value="${subtask.projectid}" /> <!-- Match the controller parameter -->
 
