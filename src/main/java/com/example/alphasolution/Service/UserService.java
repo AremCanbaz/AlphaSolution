@@ -25,5 +25,11 @@ public class UserService {
         return userRepository.findUsernameByUserId(userid);
     }
 
+    public boolean emailExists(String email){
+        return userRepository.emailExists(email);
+    }
+    public boolean usernameExists(String username){
+        return userRepository.usernameExists(username);
+    }
 
 }

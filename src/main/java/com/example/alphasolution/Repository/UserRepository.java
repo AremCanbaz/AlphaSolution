@@ -64,4 +64,33 @@ public class UserRepository {
         // Returnér en tom streng eller håndter det på anden måde
         return null; // Eller return ""; hvis tom streng foretrækkes
     }
+    //Tjekker i databasen om emailen existere
+    public boolean emailExists(String email) {
+        String sql = "SELECT * FROM users WHERE email = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, email);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                // Hvis resultSet har en række betyder det at e-mailen findes i databasen
+                return resultSet.next();  // Hvis resultSet.next() er true, betyder det, at e-mailen er fundet
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;  // Returner false, hvis emailen ikke findes
+    }
+
+    public boolean usernameExists(String username) {
+        String sql = "SELECT * FROM users WHERE username = ?";
+        try(PreparedStatement preparedStatement = connection.prepareStatement(sql)){
+            preparedStatement.setString(1,username);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                return resultSet.next();
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return false;
+    }
 }

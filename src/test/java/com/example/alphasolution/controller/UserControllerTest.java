@@ -15,6 +15,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 
 import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 class UserControllerTest {
 
@@ -34,16 +36,16 @@ class UserControllerTest {
     @Test
     void showLoginPage() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/"))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.view().name("login"));
+                .andExpect(status().isOk())
+                .andExpect(view().name("login"));
 
     }
 
     @Test
     void showlogin() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/"))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.view().name("login"));
+                .andExpect(status().isOk())
+                .andExpect(view().name("login"));
     }
 
     @Test
@@ -57,10 +59,10 @@ class UserControllerTest {
 
         when(userService.authenticate(username, password)).thenReturn(userModel);
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/loginSucces")
+        mockMvc.perform(post("/loginSucces")
                         .param("username", username)
                 .param("password",password))
-                .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
+                .andExpect(status().is3xxRedirection())
                 .andExpect(MockMvcResultMatchers.redirectedUrl("/dashboardview?userId="+ userModel.getId()));
 
         verify(userService, times(1)).authenticate(username,password);
@@ -69,8 +71,8 @@ class UserControllerTest {
     @Test
     void showCreateUserForm() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/createusersite"))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.view().name("createUser"));
+                .andExpect(status().isOk())
+                .andExpect(view().name("create-User"));
     }
 
     @Test
@@ -82,21 +84,69 @@ class UserControllerTest {
         userModel.setUsername(username);
         userModel.setPassword(password);
         userModel.setEmail(email);
+
+        when(userService.emailExists(email)).thenReturn(false);
+        when(userService.usernameExists(username)).thenReturn(false);
         doNothing().when(userService).saveUser(userModel);
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/createUser")
+        mockMvc.perform(post("/createUser")
                 .param("username",username)
                 .param("password",password)
                 .param("email",email))
-                .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
+                .andExpect(status().is3xxRedirection())
                 .andExpect(MockMvcResultMatchers.redirectedUrl("/login"));
+        verify(userService, times(1)).saveUser(argThat(user ->
+                user.getUsername().equals(username) &&
+                        user.getPassword().equals(password) &&
+                        user.getEmail().equals(email)
+        ));
+        verify(userService, times(1)).emailExists(email);
+        verify(userService, times(1)).usernameExists(username);
 
+    }
+    @Test
+    void processCreateUserForm_ReturnErrorIfUsernameExist() throws Exception {
+        String username = "username";
+        String password = "password";
+        String email = "ac@email.dk";
+
+
+        when(userService.usernameExists(username)).thenReturn(true);
+
+        mockMvc.perform(post("/createUser")
+                        .param("username", username)
+                        .param("password", password)
+                        .param("email", email))
+                .andExpect(status().isOk())  // 200 OK
+                .andExpect(view().name("create-User"))
+                .andExpect(model().attributeExists("error1"))  // Fejlmeddelelse for brugernavn
+                .andExpect(model().attribute("error1", "Dette brugernavn findes allerede"));
+        verify(userService,times(2)).usernameExists(username);
+    }
+    @Test
+    void processCreateUserForm_ReturnErrorIfEmailExist() throws Exception {
+        String username = "username";
+        String password = "password";
+        String email = "ac@email.dk";
+
+
+        when(userService.emailExists(email)).thenReturn(true);
+
+        mockMvc.perform(post("/createUser")
+                        .param("username", username)
+                        .param("password", password)
+                        .param("email", email))
+                .andExpect(status().isOk())  // 200 OK
+                .andExpect(view().name("create-User"))
+                .andExpect(model().attributeExists("error"))
+                .andExpect(model().attribute("error", "Denne email adresse findes allerede"));
+        verify(userService,times(2)).emailExists(email);
     }
 
     @Test
     void processLogout() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.post("/logout"))
-                .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
-                .andExpect(MockMvcResultMatchers.view().name("redirect:/login"));
+        mockMvc.perform(post("/logout"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:/login"));
     }
 }

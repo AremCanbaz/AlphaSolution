@@ -7,6 +7,11 @@
   <title>Alpha Solutions Opret Bruger</title>
 </head>
 <body class="body-form">
+<div class="tilbage-container2">
+  <form th:action="@{/login}" method="get">
+    <button type="submit" class="btn-tilbage2">Tilbage</button>
+  </form>
+</div>
 <form action="/createUser" method="post">
   <h1>Opret en bruger!</h1>
   <div>
@@ -21,6 +26,14 @@
     <input type="password" id="password" name="password" placeholder="Indtast din adgangskode" required
            pattern="^(?=.*[A-Z]).{8,}$" title="Adgangskoden skal være mindst 8 tegn lang og indeholde mindst ét stort bogstav.">
     <br>
+
+    <div th:if="${error}" style="color: #e51b1b;">
+      <p th:text="${error}"></p>
+    </div>
+
+    <div th:if="${error1}" style="color: #e51b1b;">
+      <p th:text="${error1}"></p>
+    </div>
 
     <button type="submit" title="Klik for at oprette bruger">Opret Bruger</button>
   </div>

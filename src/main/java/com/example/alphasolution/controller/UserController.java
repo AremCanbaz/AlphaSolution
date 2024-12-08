@@ -5,6 +5,7 @@ import com.example.alphasolution.Service.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -39,21 +40,33 @@ public class UserController {
     // Viser siden til oprettelse af en ny bruger
     @GetMapping("/createusersite")
     public String showCreateUserForm() {
-        return "createUser";
+        return "create-User";
     }
 
     // Håndterer oprettelse af en ny bruger
     @PostMapping("/createUser")
     public String processCreateUserForm(@RequestParam("username") String username,
                                         @RequestParam("password") String password,
-                                        @RequestParam("email") String email) {
+                                        @RequestParam("email") String email, Model model) {
+
+        if (userService.emailExists(email) || userService.usernameExists(username)){
+            if (userService.emailExists(email)) {
+                model.addAttribute("error","Denne email adresse findes allerede" );
+            }
+            if (userService.usernameExists(username)) {
+                model.addAttribute("error1","Dette brugernavn findes allerede" );
+            }
+            return "create-User";
+        }
+
         try {
             UserModel userModel = new UserModel(username, password, email);
             userService.saveUser(userModel);
             return "redirect:/login";
         } catch (Exception e) {
             e.printStackTrace();
-            return "createUser";
+            model.addAttribute("error2","Der opstod en fejl ved oprettelse af bruger" );
+            return "create-User";
         }
     }
     // Logud knap der benyttes af alle sider og sender brugeren tilbage til login.
