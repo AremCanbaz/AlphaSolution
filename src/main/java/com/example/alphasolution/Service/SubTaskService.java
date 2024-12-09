@@ -26,7 +26,7 @@ public class SubTaskService {
         subTaskRepository.createSubTask(projectid, subtaskName, subtaskDesc);
     }
     public void getTotalHoursForSubTask(int subtaskId) {
-        subTaskRepository.getTotalHours(subtaskId);
+        subTaskRepository.getTotalHoursAndWorkingDays(subtaskId);
     }
     public void editSubTask(int subtaskId, String subtaskName, String subtaskDesc) {
         subTaskRepository.editSubtask(subtaskId, subtaskName, subtaskDesc);

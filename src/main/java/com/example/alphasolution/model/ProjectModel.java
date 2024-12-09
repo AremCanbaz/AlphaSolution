@@ -6,14 +6,16 @@ public class ProjectModel {
     private String description;
     private int totalHours;
     private boolean iscompleted;
+    private int workingDays;
 
     // Konstruktør til ProjektModellen
-    public ProjectModel(int projectId, String projectName, String description, int totalHours, boolean iscompleted) {
+    public ProjectModel(int projectId, String projectName, String description, int totalHours, boolean iscompleted, int workingDays) {
         this.projectId = projectId;
         this.projectName = projectName;
         this.description = description;
         this.totalHours = totalHours;
         this.iscompleted = iscompleted;
+        this.workingDays = workingDays;
     }
 
     public String getProjectName() {
@@ -51,5 +53,18 @@ public class ProjectModel {
     }
     public void setCompleted(boolean iscompleted) {
         this.iscompleted = iscompleted;
+    }
+    public int getWorkingDays() {
+        return workingDays;
+    }
+    public void setWorkingDays(int workingDays) {
+        this.workingDays = workingDays;
+    }
+    public double getHoursPrDay() {
+        if (workingDays != 0 && totalHours > 0) {
+            return (double) totalHours / workingDays;
+        }
+        return 0;
+
     }
 }

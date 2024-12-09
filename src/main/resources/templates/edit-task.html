@@ -27,6 +27,11 @@
                  pattern="\d+" title="Indtast venligst et gyldigt nummer">
     <br><br>
 
+    <label for="workingDays">Arbejdsdage:</label>
+    <input type="text" id="workingDays" name="workingDays" th:value="${taskmodel.workingDays}" required
+           pattern="\d+" title="Indtast venligst et gyldigt nummer">
+    <br><br>
+
     <!-- Opgave status -->
     <label for="iscompleted">Opgavens status:</label>
     <input type="checkbox" id="iscompleted" name="iscompleted" value="true" th:checked="${taskmodel.iscompleted}" />
