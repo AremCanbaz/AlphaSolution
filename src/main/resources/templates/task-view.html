@@ -38,6 +38,8 @@
             <th>Opgavens navn</th>
             <th>Opgavens beskrivelse</th>
             <th>Opgavens tids estimat</th>
+            <th>Opgavens arbejdsdage</th>
+            <th>Opgavens timer pr. arbejdsdag</th>
             <th>Opgavens status</th>
             <th>Rediger opgaven</th>
             <th>Slet opgaven</th><!-- Ny kolonne for funktioner -->
@@ -49,7 +51,9 @@
                 <a th:text="${task.taskName}" style="color: #4caf50">Opgave navn</a>
             </td>
             <td th:text="${task.description}">Beskrivelse</td>
-            <td th:text="${task.hoursspent}">Antal timer</td>
+            <td th:text="${task.hoursspent} + ' Timer'">Antal timer</td>
+            <td th:text="${task.workingDays} + ' Dage'">Antal arbejdsdage</td>
+            <td th:text="${task.hoursPrDay} + ' Timer'">Antal timer pr. arbejdsdag</td>
             <td th:classappend="${task.iscompleted ? 'text-success' : 'text-danger'}"
                 th:text="${task.iscompleted ? 'Fuldført' : 'I gang'}">
             </td>

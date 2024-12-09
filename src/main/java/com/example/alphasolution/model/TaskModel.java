@@ -7,14 +7,17 @@ public class TaskModel {
     String description;
     int hoursspent;
     Boolean iscompleted;
+    int workingDays;
+
     //Konstruktør til opgave
-    public TaskModel(int taskid, int subTaskId, String taskName, String description, int hoursspent, boolean iscompleted) {
+    public TaskModel(int taskid, int subTaskId, String taskName, String description, int hoursspent, boolean iscompleted, int workingDays) {
         this.subTaskId = subTaskId;
         this.taskid = taskid;
         this.taskName = taskName;
         this.description = description;
         this.hoursspent = hoursspent;
         this.iscompleted = iscompleted;
+        this.workingDays = workingDays;
     }
     public int getSubTaskId() {
         return subTaskId;
@@ -52,5 +55,18 @@ public class TaskModel {
     public void setIscompleted(Boolean iscompleted) {
         this.iscompleted = iscompleted;
     }
+    public int getWorkingDays() {
+        return workingDays;
+    }
+    public void setWorkingDays(int workingDays) {
+        this.workingDays = workingDays;
+    }
+    public double getHoursPrDay(){
+        if(workingDays !=0 && hoursspent >0){
+            return(double)hoursspent/workingDays;
+        }
+        return 0;
+    }
+
 
 }

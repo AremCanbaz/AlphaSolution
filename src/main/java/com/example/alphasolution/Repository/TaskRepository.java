@@ -31,7 +31,8 @@ public class TaskRepository {
                         rs.getString("taskname"),
                         rs.getString("description"),
                         rs.getInt("hoursspent"),
-                        rs.getBoolean("iscompleted")
+                        rs.getBoolean("iscompleted"),
+                        rs.getInt("WorkingDays")
                 );
                tasks.add(task);
             }
@@ -42,21 +43,22 @@ public class TaskRepository {
         return tasks;
     }
     //Metode til at oprette opgave til delprojketet
-    public void createTask(int subtaskid, String taskdescription, String taskname, int time) {
-        String query1 = "INSERT INTO tasks (subtaskid, taskname, description, hoursspent) VALUES (?,?,?,?)";
+    public void createTask(int subtaskid, String taskdescription, String taskname, int time, int workingDays) {
+        String query1 = "INSERT INTO tasks (subtaskid, taskname, description, hoursspent, WorkingDays) VALUES (?,?,?,?,?)";
         try {
             PreparedStatement preparedStatement = con.prepareStatement(query1);
             preparedStatement.setInt(1, subtaskid);
             preparedStatement.setString(2, taskname);
             preparedStatement.setString(3, taskdescription);
             preparedStatement.setInt(4, time);
+            preparedStatement.setInt(5, workingDays);
             preparedStatement.executeUpdate();
         }  catch (SQLException sqlException) {
             sqlException.printStackTrace();}
     }
     //Metode til at ændre delprojektet og sende info til databasen
-    public void editTask(int taskId, String taskname, String description, int hoursspent, boolean isCompleted) {
-        String query = "UPDATE tasks SET taskname = ?, description = ?, hoursspent = ?, iscompleted = ? WHERE taskid = ?";
+    public void editTask(int taskId, String taskname, String description, int hoursspent, boolean isCompleted, int workingDays) {
+        String query = "UPDATE tasks SET taskname = ?, description = ?, hoursspent = ?, iscompleted = ?, WorkingDays = ? WHERE taskid = ?";
 
         try {
             PreparedStatement preparedStatement = con.prepareStatement(query);
@@ -67,7 +69,8 @@ public class TaskRepository {
             preparedStatement.setString(2, description);
             preparedStatement.setInt(3, hoursspent);
             preparedStatement.setBoolean(4, isCompleted);
-            preparedStatement.setInt(5, taskId);
+            preparedStatement.setInt(5, workingDays);
+            preparedStatement.setInt(6, taskId);
             preparedStatement.executeUpdate();
 
 
@@ -104,7 +107,8 @@ public class TaskRepository {
                             rs.getString("taskName"),
                             rs.getString("description"),
                             rs.getInt("hoursspent"),
-                            rs.getBoolean("iscompleted")
+                            rs.getBoolean("iscompleted"),
+                            rs.getInt("WorkingDays")
                     );
                 } else {
                    return null;

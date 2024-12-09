@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 public class ProjectRepository {
     //Henter databasen connection fr DbManager klassen
-    private Connection connection = DbManager.getConnection();
+    final private Connection connection = DbManager.getConnection();
 
     // Metode til at hente alle projekter tilknyttet den enkelte bruger.
     public ArrayList<ProjectModel> getAllProjectsById(int userId) {
@@ -35,7 +35,8 @@ public class ProjectRepository {
                         resultSet.getString("projectname"),
                         resultSet.getString("description"),
                         resultSet.getInt("totalhours"),
-                        resultSet.getBoolean("IsCompleted")
+                        resultSet.getBoolean("IsCompleted"),
+                        resultSet.getInt("WorkingDays")
                 );
                 //Tilføj alle projekter til arraylisten ovenfor.
                 projects.add(projectModel);
@@ -91,8 +92,9 @@ public class ProjectRepository {
     }
     //metode til at regne alle timer ud for et projekt af delprojekterne vha af project id.
     public void getTotalHours(int projectId) {
-        String query = "SELECT SUM(totalhours) AS total_hours FROM subtasks WHERE projectid = ?";
+        String query = "SELECT SUM(totalhours) AS total_hours, SUM(WorkingDays) as Working_Days FROM subtasks WHERE projectid = ?";
         int totalHours = 0;
+        int workingDays = 0;
 
         // Beregner total_hours fra subtasks-tabellen
         try {
@@ -102,6 +104,7 @@ public class ProjectRepository {
 
             if (resultSet.next()) {
                 totalHours = resultSet.getInt("total_hours");
+                workingDays = resultSet.getInt("Working_Days");
             }
             // Lukker begge metoder
             resultSet.close();
@@ -112,10 +115,11 @@ public class ProjectRepository {
 
         // Opdater total_hours i subtasks-tabellen
         try {
-            String query2 = "UPDATE projects SET totalhours = ? WHERE projectid = ?";
+            String query2 = "UPDATE projects SET totalhours = ?, WorkingDays = ? WHERE projectid = ?";
             PreparedStatement updateStatement = connection.prepareStatement(query2);
             updateStatement.setInt(1, totalHours);
-            updateStatement.setInt(2, projectId);
+            updateStatement.setInt(2, workingDays);
+            updateStatement.setInt(3, projectId);
 
             updateStatement.executeUpdate(); // Udfør opdatering
 
@@ -155,7 +159,8 @@ public class ProjectRepository {
                             rs.getString("description"),
                             rs.getInt("userid"),
                             // Brug userid, hvis det er en kolonne
-                            rs.getBoolean("IsCompleted")
+                            rs.getBoolean("IsCompleted"),
+                            rs.getInt("WorkingDays")
                     );
                 } else {
                     // Returnere null, hvis ingen rækker blev fundet

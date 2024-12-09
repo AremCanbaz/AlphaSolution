@@ -40,9 +40,11 @@
             <th>Delprojekter navn</th>
             <th>Delprojekter beskrivelse</th>
             <th>Delprojekter tids estimat</th>
+            <th>Delprojekter antal arbejdsdage</th>
+            <th>Delprojekter antal timer pr. arbejdsdag</th>
             <th>Delprojekter status</th>
-            <th>Slet Delprojekt</th>
             <th>Ændre Delprojekt</th>
+            <th>Slet Delprojekt</th>
         </tr>
         </thead>
         <tbody>
@@ -52,7 +54,9 @@
                    th:text="${subtask.subTaskName}">Delprojekt navn</a>
             </td>
             <td th:text="${subtask.subTaskDescription}">Beskrivelse</td>
-            <td th:text="${subtask.subTaskTime}">Antal timer</td>
+            <td th:text="${subtask.subTaskTime} +' Timer'">Antal timer</td>
+            <td th:text="${subtask.workingDays}+ ' Dage'">Antal arbejdsdage</td>
+            <td th:text="${subtask.hoursPrDay}+ ' Timer'">Antal arbejdsdage</td>
             <td th:classappend="${subtask.subTaskStatus ? 'text-success' : 'text-danger'}"
                 th:text="${subtask.subTaskStatus ? 'Fuldført' : 'I gang'}"></td>
             <td>
@@ -73,7 +77,7 @@
             </td>
         </tr>
         <tr th:if="${#lists.isEmpty(subtasks)}">
-            <td colspan="5" class="no-projects">Ingen Delprojekter her, opret en nu for at komme igang</td>
+            <td colspan="7" class="no-projects">Ingen Delprojekter her, opret en nu for at komme igang</td>
         </tr>
         </tbody>
     </table>

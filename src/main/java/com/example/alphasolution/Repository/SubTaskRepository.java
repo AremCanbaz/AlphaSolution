@@ -28,7 +28,8 @@ public class SubTaskRepository {
                         rs.getString("subtaskdescription"),
                         rs.getString("subtaskname"),
                         rs.getInt("totalhours"),
-                        rs.getBoolean("iscompleted")
+                        rs.getBoolean("iscompleted"),
+                        rs.getInt("WorkingDays")
                 );
                 subTasks.add(subTask);
             }
@@ -80,9 +81,10 @@ public class SubTaskRepository {
         }
     }
     // metode til at ændre total timer fra opgaverne tilknyttet delprojektet og opdatere dem i databasen.
-    public void getTotalHours(int subtaskId) {
-        String query = "SELECT SUM(hoursspent) AS total_hours FROM tasks WHERE subtaskid = ?";
+    public void getTotalHoursAndWorkingDays(int subtaskId) {
+        String query = "SELECT SUM(hoursspent) AS total_hours, SUM(WorkingDays) AS Working_Days FROM tasks WHERE subtaskid = ?";
         int totalHours = 0;
+        int workingDays = 0;
 
         // Beregner total_hours fra tasks-tabellen
         try {
@@ -92,6 +94,7 @@ public class SubTaskRepository {
 
             if (resultSet.next()) {
                 totalHours = resultSet.getInt("total_hours");
+                workingDays = resultSet.getInt("Working_Days");
             }
             resultSet.close();
             preparedStatement.close();
@@ -101,10 +104,11 @@ public class SubTaskRepository {
 
         // Opdatere total_hours i del projekt tabellen(SubtaskTabel)
         try {
-            String query2 = "UPDATE subtasks SET totalhours = ? WHERE subtaskid = ?";
+            String query2 = "UPDATE subtasks SET totalhours = ?, WorkingDays = ? WHERE subtaskid = ?";
             PreparedStatement updateStatement = con.prepareStatement(query2);
             updateStatement.setInt(1, totalHours);
-            updateStatement.setInt(2, subtaskId);
+            updateStatement.setInt(2, workingDays);
+            updateStatement.setInt(3, subtaskId);
 
             updateStatement.executeUpdate(); // Udfør opdatering
 
