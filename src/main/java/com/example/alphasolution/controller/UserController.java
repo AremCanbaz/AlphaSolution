@@ -27,13 +27,14 @@ public class UserController {
 
     // Håndterer login-formularen
     @PostMapping("/loginSucces")
-    public String processLoginForm(@RequestParam String username, @RequestParam String password, HttpSession session) {
+    public String processLoginForm(@RequestParam String username, @RequestParam String password, HttpSession session, Model model) {
         UserModel user = userService.authenticate(username, password);
         if (user != null) {
             session.setAttribute("userId", user.getId());
-            session.setAttribute("username", user.getUsername());
-            return "redirect:/dashboardview?userId=" + user.getId();  // Omdirigér til dashboardet
+            session.setAttribute("username", username);
+            return "redirect:/dashboardview?userId=" + user.getId();  // Omdirigér til dashboard
         }
+        model.addAttribute("error2","Login Fejlede" );
         return "login";
     }
 

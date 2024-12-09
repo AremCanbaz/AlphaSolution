@@ -22,6 +22,9 @@
     <button type="submit">Log ind</button>
   </div>
 </form>
+<div th:if="${error2}" style="color: #e51b1b;">
+  <p th:text="${error2}"></p>
+</div>
 
 <!-- Sektion til oprettelse af ny bruger -->
 <div>
