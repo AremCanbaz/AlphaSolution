@@ -1,9 +1,7 @@
 package com.example.alphasolution.controller;
 
 import com.example.alphasolution.Service.ProjectService;
-import com.example.alphasolution.Service.UserService;
 import com.example.alphasolution.model.ProjectModel;
-import com.example.alphasolution.model.UserModel;
 import jakarta.servlet.http.HttpSession;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,7 +9,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -25,8 +22,6 @@ class ProjectControllerTest {
     @Mock
     private ProjectService projectService;
 
-    @Mock
-    private UserService userService;
 
     @InjectMocks
     private ProjectController projectController;
@@ -44,7 +39,7 @@ class ProjectControllerTest {
 
         String username = "admin";
         ArrayList<ProjectModel> projects = new ArrayList<>();
-        projects.add(new ProjectModel(1,"Test","Test",10,false));
+        projects.add(new ProjectModel(1,"Test","Test",10,false,1));
 
         HttpSession mockSession = mock(HttpSession.class);
         when(mockSession.getAttribute("userId")).thenReturn(userId);
@@ -101,7 +96,7 @@ class ProjectControllerTest {
     void editProject() throws Exception {
         int userId = 1;
         int projectId = 1;
-        ProjectModel projectModel = new ProjectModel(projectId,"Test","Test",10,false);
+        ProjectModel projectModel = new ProjectModel(projectId,"Test","Test",10,false,2);
         when(projectService.getProjectById(projectId)).thenReturn(projectModel);
         mockMvc.perform(MockMvcRequestBuilders.get("/editproject")
                 .param("projectid", String.valueOf(projectId))

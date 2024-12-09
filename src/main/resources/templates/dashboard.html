@@ -42,6 +42,8 @@
             <th>Projekt Navn</th>
             <th>Beskrivelse</th>
             <th>Total antal timer</th>
+            <th>Total antal arbejdsdage</th>
+            <th>Total antal timer pr. arbejdsdag</th>
             <th>Projektets status</th>
             <th>Funktioner</th>
         </tr>
@@ -58,7 +60,9 @@
                 </a>
             </td>
             <td th:text="${project.description}">Beskrivelse</td>
-            <td th:text="${project.totalHours}">Antal timer</td>
+            <td th:text="${project.totalHours}+ ' Timer'">Antal timer</td>
+            <td th:text="${project.workingDays}+' Dage'">Antal arbejdsdage</td>
+            <td th:text="${project.hoursPrDay}+ ' Timer'" >Antal timer pr. arbejdsdage</td>
             <td th:classappend="${project.completed ? 'text-success' : 'text-danger'}"
                 th:text="${project.completed ? 'Fuldført' : 'I gang'}"></td>
             <!-- Slet Projekt Knap -->
@@ -82,7 +86,7 @@
         </tr>
         <!-- Hvis der ikke er nogen projekter kommer meddelsen nedenfor frem-->
         <tr th:if="${#lists.isEmpty(projects)}">
-            <td colspan="4" class="no-projects">No projects available. Create one to get started!</td>
+            <td colspan="7" class="no-projects">No projects available. Create one to get started!</td>
         </tr>
         </tbody>
     </table>

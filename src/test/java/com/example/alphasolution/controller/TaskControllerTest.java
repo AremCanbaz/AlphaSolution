@@ -18,7 +18,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class TaskControllerTest {
@@ -27,9 +26,6 @@ class TaskControllerTest {
     private TaskService taskService;
     @Mock
     private SubTaskService subTaskService;
-
-    @Mock
-    private ProjectService projectService;
 
     @InjectMocks
     private TaskController taskController;
@@ -58,8 +54,8 @@ class TaskControllerTest {
         subTaskModelTest.setSubTaskTime(5);
 
         ArrayList<TaskModel> tasksTest = new ArrayList<>();
-        tasksTest.add(new TaskModel(1,subtaskId,"test","testDescription",2,false));
-        tasksTest.add(new TaskModel(2,subtaskId,"test","testDescription",3,false));
+        tasksTest.add(new TaskModel(1,subtaskId,"test","testDescription",2,false,2));
+        tasksTest.add(new TaskModel(2,subtaskId,"test","testDescription",3,false,4));
 
         when(taskService.getTasks(subtaskId)).thenReturn(tasksTest);
         when(subTaskService.getSubtaskName(subtaskId)).thenReturn(subtaskName);
@@ -101,18 +97,20 @@ class TaskControllerTest {
         String taskName = "taskName";
         String taskDescription = "taskDescription";
         int timeTest = 4;
+        int workingDays =2;
 
-        doNothing().when(taskService).createtask(subtaskId, taskName, taskDescription, timeTest);
+        doNothing().when(taskService).createtask(subtaskId, taskName, taskDescription, timeTest,workingDays);
 
         mockMvc.perform(MockMvcRequestBuilders.post("/opretopgaveaction")
                 .param("subtaskid", String.valueOf(subtaskId))
                 .param("taskname",taskName)
                 .param("taskdescription",taskDescription)
-                .param("time", String.valueOf(timeTest)))
+                .param("time", String.valueOf(timeTest))
+                        .param("workingDays",String.valueOf(workingDays)))
                 .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
                 .andExpect(MockMvcResultMatchers.redirectedUrl("/taskview?subtaskid="+subtaskId));
 
-        verify(taskService,times(1)).createtask(subtaskId, taskName, taskDescription, timeTest);
+        verify(taskService,times(1)).createtask(subtaskId, taskName, taskDescription, timeTest,workingDays);
 
     }
 
@@ -137,7 +135,7 @@ class TaskControllerTest {
     void edittask() throws Exception {
         int subtaskId = 1;
         int taskId = 2;
-        TaskModel taskModel = new TaskModel(taskId,subtaskId,"test","testDescription",2,false);
+        TaskModel taskModel = new TaskModel(taskId,subtaskId,"test","testDescription",2,false,5);
 
         when(taskService.getTask(taskId)).thenReturn(taskModel);
         mockMvc.perform(MockMvcRequestBuilders.get("/edittask")
@@ -160,8 +158,9 @@ class TaskControllerTest {
         int hoursspent = 5;
         boolean iscompleted = true;
         int subtaskId = 6;
+        int workingDays = 1;
 
-        doNothing().when(taskService).updatetask(taskId,taskName,testDescription,hoursspent,iscompleted);
+        doNothing().when(taskService).updatetask(taskId,taskName,testDescription,hoursspent,iscompleted,workingDays);
 
         mockMvc.perform(MockMvcRequestBuilders.post("/edittaskSucces")
                 .param("taskid", String.valueOf(taskId))
@@ -169,10 +168,11 @@ class TaskControllerTest {
                 .param("description",testDescription)
                 .param("hoursspent", String.valueOf(hoursspent))
                 .param("iscompleted", String.valueOf(iscompleted))
-                .param("subtaskid", String.valueOf(subtaskId)))
+                .param("subtaskid", String.valueOf(subtaskId))
+                        .param("workingDays", String.valueOf(workingDays)))
                 .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
                 .andExpect(MockMvcResultMatchers.redirectedUrl("/taskview?subtaskid=" + subtaskId));
 
-        verify(taskService,times(1)).updatetask(taskId,taskName,testDescription,hoursspent,iscompleted);
+        verify(taskService,times(1)).updatetask(taskId,taskName,testDescription,hoursspent,iscompleted,workingDays);
     }
 }

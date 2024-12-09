@@ -57,8 +57,9 @@ public class TaskController {
     public String opretopgave(@RequestParam int subtaskid,
                               @RequestParam String taskname,
                               @RequestParam String taskdescription,
-                              @RequestParam int time) {
-        taskService.createtask(subtaskid, taskname, taskdescription, time);
+                              @RequestParam int time,
+                              @RequestParam int workingDays) {
+        taskService.createtask(subtaskid, taskname, taskdescription, time, workingDays);
         return "redirect:/taskview?subtaskid=" + subtaskid;
 
     }
@@ -88,11 +89,12 @@ public class TaskController {
             @RequestParam String taskname,
             @RequestParam String description,
             @RequestParam int hoursspent,
+            @RequestParam int workingDays,
             // DefaultValue = "False" er sat ind, hvis den markeret box er falsk bliver det sendt ind i databasen er falsk, ellers virkede det ikke.
             @RequestParam(defaultValue = "false") boolean iscompleted,
             @RequestParam int subtaskid) {
         //Metode til at opdatere opgaven i databasen
-        taskService.updatetask(taskid, taskname, description, hoursspent, iscompleted);
+        taskService.updatetask(taskid, taskname, description, hoursspent, iscompleted,workingDays);
         return "redirect:/taskview?subtaskid=" + subtaskid;
 
 }
